@@ -1,4 +1,5 @@
-# Diversity_connect_URM_application
+# CSE-5335 Web Data Management 
+# Diversity_connect_URM_application Project
 
 
 URM APPLICATION
