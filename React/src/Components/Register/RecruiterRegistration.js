@@ -29,7 +29,7 @@ export default class RecruiterRegistration extends Component {
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="rdesc"><b>Description</b></label></th>
-                                            <td> <textarea rows="4" cols="57" id="rdesc"
+                                            <td> <textarea rows="4" cols="54" id="rdesc"
                                                 placeholder="Enter your company description"></textarea></td>
                                         </tr>
                                         <tr>

@@ -22,7 +22,7 @@ export default class Jobviewurm extends Component {
 					<tr>
 						<th><label htmlFor="jdesc"><b>Job Description</b></label></th>
 						<td>
-							<textarea rows="4" cols="57" id="jdesc" placeholder="Enter your institution description"
+							<textarea rows="4" cols="54" id="jdesc" placeholder="Enter your institution description"
 								readOnly defaultValue="A software developer with a focus on web application development and server-side, or database-side, programming is known as a back-end developer. The code that the website visitor cannot see is handled by back-end developers, but they are also in charge of making sure that the front end, or what the visitor sees and interacts with, is fully working as a whole"/>
 						</td>
 					</tr>

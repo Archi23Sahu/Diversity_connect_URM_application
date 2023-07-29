@@ -18,7 +18,7 @@ export default class Jobviewrecruiter extends Component {
         <h1 className="dashhead">Recruiter Dashboard</h1>
 	    <div className="container">
 		<section className="card">
-			<form action="" method="post"> <br/>
+			<form onSubmit={this.handleSubmit}> <br/>
             <h2> View Job Posting</h2>
 				<table className="form-group">
 					<tbody>
@@ -46,7 +46,7 @@ export default class Jobviewrecruiter extends Component {
                     <tr>
 					<td colSpan="2">
 						<div className="button-container">
-							<a href="" className="button">Save</a>
+							<button type="Submit" className="button">Save</button>
 						</div>
 						<br/>
 					</td>
