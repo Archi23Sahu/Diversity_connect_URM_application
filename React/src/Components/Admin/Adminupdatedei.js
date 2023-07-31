@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
 
 export default class Adminupdatedei extends Component {
     handleSubmit = (event) => {
@@ -21,22 +22,8 @@ export default class Adminupdatedei extends Component {
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
 
-
-    <div className="center">
-        <div className="wrapper">
-            <div className="sidenav">
-                <Link to="/Admindashboard"> Dashboard</Link>
-                <Link to="/Adminapplicationstatus"> Application Status</Link>
-                <Link to="/Adminviewjobs"> Job posted</Link>
-                <Link to="/Adminviewurm"> URM Candidates</Link>
-                <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                <Link to="/Adminviewdei"> DEI Officers</Link>
-                <Link to="/Adminviewacademia"> Academic Institution</Link>
-                <Link to="/Admincontactus"> Contact Us Questions</Link>
-            </div>
-        </div>
-    </div>
-
+    
+    <AdminSideMenu/>
 
     <div className="container">
         <section className="card">
@@ -46,40 +33,40 @@ export default class Adminupdatedei extends Component {
                     <tbody>
                     <tr>
                         <th><label htmlFor="dname"><b>Name</b></label></th>
-                        <td> <input type="text" name="" id="dname" placeholder="Enter your name " value="DEI1"/></td>
+                        <td> <input type="text" name="" id="dname" placeholder="Enter your name " defaultValue="DEI1"/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="ddesc"><b>Description</b></label></th>
-                        <td> <textarea rows="3" cols="54" id="ddesc"
-                                placeholder="Enter description">Description of dei officer</textarea></td>
+                        <td> <textarea rows="3" cols="57" id="ddesc"
+                                placeholder="Enter description" defaultValue="Description of dei officer"/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="role"><b>Role</b></label></th>
-                        <td> <input type="text" name="" id="role" placeholder="Enter role" value="XYZ"/></td>
+                        <td> <input type="text" name="" id="role" placeholder="Enter role" defaultValue="XYZ"/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="organization"><b>Organization</b></label></th>
                         <td> <input type="text" name="" id="organization" placeholder="Enter your organization"
-                                value="Abacus"/></td>
+                                defaultValue="Abacus"/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="goal"><b>Goals</b></label></th>
-                        <td> <input type="text" name="" id="goal" placeholder="Enter goals" value="goal1, goal2"/>
+                        <td> <input type="text" name="" id="goal" placeholder="Enter goals" defaultValue="goal1, goal2"/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="initiatives"><b>Initiatives</b></label></th>
                         <td> <input type="text" name="" id="initiatives" placeholder="Enter Initiatives"
-                                value="Initiatives1, Initiatives2"/></td>
+                                defaultValue="Initiatives1, Initiatives2"/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="event"><b>new Initiatives/Events</b></label></th>
                         <td> <input type="text" name="" id="event" placeholder="Enter new Initiatives or Events"
-                                value="ew Initiatives, new Events"/></td>
+                                defaultValue="new Initiatives, new Events"/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="postions"><b>Postions</b></label></th>
-                        <td><input type="text" name="" id="postions" placeholder="Enter positions" value="Post doc"/>
+                        <td><input type="text" name="" id="postions" placeholder="Enter positions" defaultValue="Post doc"/>
                         </td>
                     </tr>
                     <tr>

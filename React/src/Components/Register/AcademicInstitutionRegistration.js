@@ -32,7 +32,7 @@ export default class AcademicInstitutionRegistration extends Component {
                                         <tr>
                                             <th><label htmlFor="adesc"><b>Description</b></label></th>
                                             <td>
-                                                <textarea rows="4" cols="54" id="adesc"
+                                                <textarea rows="4" cols="57" id="adesc"
                                                     placeholder="Enter your institution description"></textarea>
                                             </td>
                                         </tr>

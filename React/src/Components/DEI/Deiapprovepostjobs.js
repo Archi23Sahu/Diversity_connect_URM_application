@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Deiapprovepostjobs extends Component {
 	handleAccept = (candidateName) => {
@@ -79,7 +80,7 @@ export default class Deiapprovepostjobs extends Component {
                 </tbody>
 			</table>
 			<div className="button-container">
-             <Link to="/Deidashboard" className="button">Back to Dashboard</Link>
+             <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 

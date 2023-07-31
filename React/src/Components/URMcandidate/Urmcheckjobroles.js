@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Urmcheckjobroles extends Component {
 	handleApplyClick = () => {		
@@ -65,7 +66,7 @@ export default class Urmcheckjobroles extends Component {
 
 			</table>
             <div>
-			<Link to="/Urmdashboard" className="button">Back to Dashboard</Link>
+			<Link to={AppUrl.Urmdashboard} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 

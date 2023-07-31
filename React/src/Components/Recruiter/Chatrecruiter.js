@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom';
+import { AppUrl } from '../../Constants'; 
 
 
 export default class Chatrecruiter extends Component {
@@ -83,7 +84,7 @@ export default class Chatrecruiter extends Component {
                 <button type="submit" className="button">Send</button>
               </form>
 			<div className="button-container">
-            <Link to="/Recruiterdashboard" className="button"> Back to Dashboard</Link>
+            <Link to={AppUrl.Recruiterdashboard} className="button"> Back to Dashboard</Link>
 			</div>
 		</div>
 

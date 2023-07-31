@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Urmdashboard extends Component {
   render() {
@@ -10,7 +11,7 @@ export default class Urmdashboard extends Component {
        <div className="content">
 
         <div className="left-side">
-            <Link to="/Profileurm" className="button">Edit Profile</Link>
+            <Link to={AppUrl.Profileurm} className="button">Edit Profile</Link>
             <h2>
                 <p>Personal Information</p>
             </h2>
@@ -44,7 +45,7 @@ export default class Urmdashboard extends Component {
 
         </div>
         <div className="right-side">
-            <Link to="/Urmcheckjobroles" className="dashbutton">Check Available Job Roles</Link>
+            <Link to={AppUrl.Urmcheckjobroles} className="dashbutton">Check Available Job Roles</Link>
             <h2>Applied Jobs</h2>
             <div className="joblist">
                 <div className="job-posting">
@@ -53,8 +54,8 @@ export default class Urmdashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Applicanturm" className="button">View Job Status</Link>
-                    <Link to="/Jobviewurm" className="button">Details</Link>
+                    <Link to={AppUrl.Applicanturm} className="button">View Job Status</Link>
+                    <Link to={AppUrl.Jobviewurm} className="button">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 2</h3>
@@ -62,8 +63,8 @@ export default class Urmdashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Applicanturm" className="button">View Job Status</Link>
-                    <Link to="/Jobviewurm" className="button">Details</Link>
+                    <Link to={AppUrl.Applicanturm} className="button">View Job Status</Link>
+                    <Link to={AppUrl.Jobviewurm} className="button">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 3</h3>
@@ -71,8 +72,8 @@ export default class Urmdashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Applicanturm" className="button">View Job Status</Link>
-                    <Link to="/Jobviewurm" className="button">Details</Link>
+                    <Link to={AppUrl.Applicanturm} className="button">View Job Status</Link>
+                    <Link to={AppUrl.Jobviewurm} className="button">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 4</h3>
@@ -80,8 +81,8 @@ export default class Urmdashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Applicanturm" className="button">View Job Status</Link>
-                    <Link to="/Jobviewurm" className="button">Details</Link>
+                    <Link to={AppUrl.Applicanturm} className="button">View Job Status</Link>
+                    <Link to={AppUrl.Jobviewurm} className="button">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 5</h3>
@@ -89,14 +90,14 @@ export default class Urmdashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Applicanturm" className="button">View Job Status</Link>
-                    <Link to="/Jobviewurm" className="button">Details</Link>
+                    <Link to={AppUrl.Applicanturm} className="button">View Job Status</Link>
+                    <Link to={AppUrl.Jobviewurm} className="button">Details</Link>
                 </div>
             </div>
 
         </div>
         <div className="chatbutton chatbutton button">
-        <Link to="/Chaturm" >Chat</Link>
+        <Link to={AppUrl.Chaturm} >Chat</Link>
         </div>
 
     </div>

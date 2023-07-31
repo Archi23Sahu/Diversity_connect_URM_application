@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
+
 
 export default class Deidashboard extends Component {
   render() {
@@ -10,9 +12,9 @@ export default class Deidashboard extends Component {
     <div className="content">
 
         <div className="left-side">
-            <Link to="/Profiledeiofficer" className="dashbutton">Edit Profile</Link>
-            <Link to="/Deiofficerreport" className="dashbutton">Report</Link>
-            <Link to="/Deiviewurmcandidate" className="dashbutton">Search URM Candidate</Link>
+            <Link to={AppUrl.Profiledeiofficer} className="dashbutton">Edit Profile</Link>
+            <Link to={AppUrl.Deiofficerreport} className="dashbutton">Report</Link>
+            <Link to={AppUrl.Deiviewurmcandidate} className="dashbutton">Search URM Candidate</Link>
             <h2>
                 <p>Personal Information</p>
             </h2>
@@ -37,8 +39,8 @@ export default class Deidashboard extends Component {
 
         </div>
         <div className="right-side">
-            <Link to="/Deipostjobs" className="dashbutton">Create Jobs</Link>
-            <Link to="/Deiapprovepostjobs" className="dashbutton">Approve Jobs</Link>
+            <Link to={AppUrl.Deipostjobs} className="dashbutton">Create Jobs</Link>
+            <Link to={AppUrl.Deiapprovepostjobs} className="dashbutton">Approve Jobs</Link>
             <div className="joblist">
                 <div className="job-posting">
                     <h3>Job Title 1</h3>
@@ -46,8 +48,8 @@ export default class Deidashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Deiapplicant" className="button">See all Applicants</Link>
-                    <Link to="/Deijobview" className="dashbutton">Details</Link>
+                    <Link to={AppUrl.Deiapplicant} className="button">See all Applicants</Link>
+                    <Link to={AppUrl.Deijobview} className="dashbutton">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 2</h3>
@@ -55,8 +57,8 @@ export default class Deidashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Deiapplicant" className="button">See all Applicants</Link>
-                    <Link to="/Deijobview" className="dashbutton">Details</Link>
+                    <Link to={AppUrl.Deiapplicant} className="button">See all Applicants</Link>
+                    <Link to={AppUrl.Deijobview} className="dashbutton">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 3</h3>
@@ -64,8 +66,8 @@ export default class Deidashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Deiapplicant" className="button">See all Applicants</Link>
-                    <Link to="/Deijobview" className="dashbutton">Details</Link>
+                    <Link to={AppUrl.Deiapplicant} className="button">See all Applicants</Link>
+                    <Link to={AppUrl.Deijobview} className="dashbutton">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 4</h3>
@@ -73,8 +75,8 @@ export default class Deidashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Deiapplicant" className="button">See all Applicants</Link>
-                    <Link to="/Deijobview" className="dashbutton">Details</Link>
+                    <Link to={AppUrl.Deiapplicant} className="button">See all Applicants</Link>
+                    <Link to={AppUrl.Deijobview} className="dashbutton">Details</Link>
                 </div>
                 <div className="job-posting">
                     <h3>Job Title 5</h3>
@@ -82,14 +84,14 @@ export default class Deidashboard extends Component {
                         <label>No of candidates applied:</label>
                         <input type="text" value="140" readOnly />
                     </div>
-                    <Link to="/Deiapplicant" className="button">See all Applicants</Link>
-                    <Link to="/Deijobview" className="dashbutton">Details</Link>
+                    <Link to={AppUrl.Deiapplicant} className="button">See all Applicants</Link>
+                    <Link to={AppUrl.Deijobview} className="dashbutton">Details</Link>
                 </div>
             </div>
         </div>
     </div>
     <div className="chatbutton chatbutton button">
-        <Link to="/Chatdei" className="">Chat</Link>
+        <Link to={AppUrl.Chatdei} >Chat</Link>
     </div>
    <Footer/>
     </div>

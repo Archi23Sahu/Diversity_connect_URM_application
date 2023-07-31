@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Academiajobview extends Component {
   handleSubmit = (event) => {
@@ -63,7 +64,7 @@ export default class Academiajobview extends Component {
             </form>
             <br />
             <div className="button-container">
-              <Link to="/Academiadashboard" className="button">Back to Dashboard</Link>
+              <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
             </div>
           </section>
 

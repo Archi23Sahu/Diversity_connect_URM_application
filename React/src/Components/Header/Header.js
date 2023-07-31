@@ -1,38 +1,36 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { AppUrl } from '../../Constants';
+
 
 export default class Header extends Component {
     constructor(props) {
-        super(props)
-      
-        this.state = {
-           
-        }
+      super(props)
+    
+      this.state = {
+         
       }
+    }
+    
     render() {
         return (
             <div>
                 <div className="navbar">
                     <ul>
-                        {!this.props.isLogin && <li><Link to="/">HOME</Link></li>}
-                        <li><Link to="/">BLOG</Link></li>
+                        {!this.props.isLogin && <li><Link to={AppUrl.base}>HOME</Link></li>}   
+                        <li><Link to="https://sxr9357.uta.cloud/">BLOG</Link></li>                     
                         <li className="dropdown">
                             <a href="#">SERVICES</a>
                             <div className="dropdown-content">
-                                <Link to="/urmCandidateService">CANDIDATE</Link>
-                                <Link to="/servicesAcademia">ACADEMIA</Link>
-                                <Link to="/servicesDEI">DEI</Link>
-                                <Link to="/serviceRecruiter">RECRUITER</Link>
-                                <Link to="/Academiadashboard">ACADEMIA test</Link>
-                                <Link to="/Urmdashboard">Candidate test</Link>
-                                <Link to="/Deidashboard">Dei test</Link>
-                                <Link to="/Admindashboard">Admin test</Link>
-                                <Link to="/Recruiterdashboard">Recruiter test</Link>
+                                <Link to={AppUrl.urmCandidateService}>CANDIDATE</Link>
+                                <Link to={AppUrl.servicesAcademia}>ACADEMIA</Link>
+                                <Link to={AppUrl.servicesDEI}>DEI</Link>
+                                <Link to={AppUrl.serviceRecruiter}>RECRUITER</Link>
                             </div>
                         </li>
-                        <li><Link to="/aboutUs">ABOUT US</Link></li>
-                        <li><Link to="/contactUs">CONTACT US</Link></li>
-                        {this.props.isLogin && <li><Link to="/">LOGOUT</Link></li>}
+                        <li><Link to={AppUrl.aboutUs}>ABOUT US</Link></li>
+                        <li><Link to={AppUrl.contactUs}>CONTACT US</Link></li>
+                        {this.props.isLogin && <li><Link to={AppUrl.Logout}>Log out</Link></li>}
 
                     </ul>
                 </div>

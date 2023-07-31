@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
 
 export default class Adminupdateurm extends Component {
     handleSubmit = (event) => {
@@ -23,21 +24,8 @@ export default class Adminupdateurm extends Component {
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
 
-<div className="secondarycontent">
-    <div className="center">
-        <div className="wrapper">
-            <div className="sidenav">
-                <Link to="/Admindashboard"> Dashboard</Link>
-                <Link to="/Adminapplicationstatus"> Application Status</Link>
-                <Link to="/Adminviewjobs"> Job posted</Link>
-                <Link to="/Adminviewurm"> URM Candidates</Link>
-                <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                <Link to="/Adminviewdei"> DEI Officers</Link>
-                <Link to="/Adminviewacademia"> Academic Institution</Link>
-                <Link to="/Admincontactus"> Contact Us Questions</Link>
-            </div>
-        </div>
-    </div>
+
+    <AdminSideMenu/>
 
     <div className="container">
         <section className="card">
@@ -124,7 +112,7 @@ export default class Adminupdateurm extends Component {
 
     </div>
       </div>
-      </div>
+ 
     )
   }
 }

@@ -378,7 +378,7 @@ h3 {
 
 table,
 td {
-    border: 1px solid #8d8b8b;
+    border: 1px solid #a3a1a1;
 }
 
 thead
@@ -386,11 +386,6 @@ thead
     border:1px solid #a3a1a1;
     background-color: #333;
     color: #ffffff;
-}
-
-.formheader{
-  background-color: transparent;
-  border: none;
 }
 
 h3{
@@ -470,7 +465,6 @@ h3{
 .noinfo {
   padding-left: 10px;
   text-align: left; 
-  padding-bottom: 10px;
 }
 
 .noinfo label,
@@ -499,9 +493,7 @@ h3{
   bottom: 20px;
   right: 20px;
   border-radius: 50%;
-  background-color: #9e3cb6;   
-  font-size: 20px;
-  
+  background-color: #B71DDE; 
  
 }
 
@@ -511,6 +503,7 @@ h3{
   border-radius: 50%;
   background-color: transparent;
   color: #fff;
+  font-size: 16px;
   cursor: pointer;
 }
 
@@ -584,7 +577,7 @@ h3{
   text-align: center;
 }
   
-
+ 
 .parent{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  
@@ -599,7 +592,9 @@ h3{
     margin: 10px;
     max-width: 100%;
     height: auto; 
-  }	
+  }	      
+       
+
        
   .box {
     background-color: green;

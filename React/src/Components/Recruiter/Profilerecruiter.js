@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
-import { Link } from 'react-router-dom';   
+import { Link } from 'react-router-dom'; 
+import { AppUrl } from '../../Constants';   
 
 export default class Profilerecruiter extends Component {
     handleSubmit = (event) => {
@@ -32,7 +33,7 @@ export default class Profilerecruiter extends Component {
                 </tr>
                 <tr>
                     <th><label htmlFor="rdesc"><b>Description</b></label></th>
-                    <td> <textarea rows="4" cols="54" id="rdesc"
+                    <td> <textarea rows="4" cols="57" id="rdesc"
                             placeholder="Enter your company description" defaultValue="UVWXYZ"/></td>
                 </tr>
                 <tr>
@@ -69,7 +70,7 @@ export default class Profilerecruiter extends Component {
 
         </form> <br />
         <div className="button-container">
-        <Link to="/Recruiterdashboard" className="button"> Back to Dashboard</Link>
+        <Link to={AppUrl.Recruiterdashboard} className="button"> Back to Dashboard</Link>
         </div>
     </section>
 

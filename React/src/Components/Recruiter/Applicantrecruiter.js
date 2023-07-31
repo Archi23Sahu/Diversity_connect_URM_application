@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
-import { Link } from 'react-router-dom';    
+import { Link } from 'react-router-dom';   
+import { AppUrl } from '../../Constants'; 
 
 export default class Applicantrecruiter extends Component {
   render() {
@@ -47,7 +48,7 @@ export default class Applicantrecruiter extends Component {
       </tbody>
       </table>
       <div className="button-container">
-        <Link to="/Recruiterdashboard" className="button"> Back to Dashboard</Link>
+        <Link to={AppUrl.Recruiterdashboard} className="button"> Back to Dashboard</Link>
       </div>
 
     </section>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
-import { Link } from 'react-router-dom';   
+import { Link } from 'react-router-dom';  
+import { AppUrl } from '../../Constants'; 
 
 export default class Viewurmrecruiter extends Component {
 	handleSearch = (event) => {
@@ -28,15 +29,15 @@ export default class Viewurmrecruiter extends Component {
 				<tbody>
 				<tr>
 					<th><label htmlFor="exp"><b>Research Experience</b></label></th>
-					<td> <input type="text" name="exp" id="exp" defaultValue="3"/></td>
+					<td> <input type="text" name="exp" id="exp" placeholder='Enter Research Experience'/></td>
 				</tr>
 				<tr>
 					<th><label htmlFor="position"><b>Position</b></label></th>
-					<td> <input type="text" name="position" id="position" defaultValue="post doc" required/></td>
+					<td> <input type="text" name="position" id="position" placeholder='Enter Position' /></td>
 				</tr>
 				<tr>
 					<th><label htmlFor="location"><b>Location</b></label></th>
-					<td><input type="text" name="location" id="location" defaultValue="Dallas"/> </td>
+					<td><input type="text" name="location" id="location" placeholder='Enter Location'/> </td>
 				</tr>
 				<tr>
 					<td colSpan="2">
@@ -106,7 +107,7 @@ export default class Viewurmrecruiter extends Component {
 			</table>
 
 			<div className="button-container">
-            <Link to="/Recruiterdashboard" className="button"> Back to Dashboard</Link>
+            <Link to={AppUrl.Recruiterdashboard} className="button"> Back to Dashboard</Link>
 			</div>
 		</section>
 

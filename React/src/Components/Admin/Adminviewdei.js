@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
+import { AppUrl } from '../../Constants'
+
 
 export default class Adminviewdei extends Component {
     handleDelete = (Name) => {
@@ -11,21 +14,8 @@ export default class Adminviewdei extends Component {
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
 
+                    <AdminSideMenu />
 
-    <div className="center">
-        <div className="wrapper">
-            <div className="sidenav">
-                <Link to="/Admindashboard"> Dashboard</Link>
-                <Link to="/Adminapplicationstatus"> Application Status</Link>
-                <Link to="/Adminviewjobs"> Job posted</Link>
-                <Link to="/Adminviewurm"> URM Candidates</Link>
-                <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                <Link to="/Adminviewdei"> DEI Officers</Link>
-                <Link to="/Adminviewacademia"> Academic Institution</Link>
-                <Link to="/Admincontactus"> Contact Us Questions</Link>
-            </div>
-        </div>
-    </div>
 
     <div className="container">
         <section className="card">
@@ -60,7 +50,7 @@ export default class Adminviewdei extends Component {
                     </td>
                     <td>
                         <div className=""> 
-                         <Link to="/Adminupdatedei" className="button">Update</Link> 
+                         <Link to={AppUrl.Adminupdatedei} className="button">Update</Link> 
                         </div>
                     </td>
                 </tr>
@@ -78,7 +68,7 @@ export default class Adminviewdei extends Component {
                     </td>
                     <td>
                         <div className=""> 
-                         <Link to="/Adminupdatedei" className="button">Update</Link> 
+                         <Link to={AppUrl.Adminupdatedei} className="button">Update</Link> 
                         </div>
                     </td>
                 </tr>
@@ -96,10 +86,11 @@ export default class Adminviewdei extends Component {
                     </td>
                     <td>
                         <div className=""> 
-                         <Link to="/Adminupdatedei" className="button">Update</Link> 
+                         <Link to={AppUrl.Adminupdatedei} className="button">Update</Link> 
                         </div>
                     </td>
                 </tr>
+                                
 
             </tbody>
             </table>
@@ -107,7 +98,7 @@ export default class Adminviewdei extends Component {
         </section><br/><br/>
 
         <div className="button-container"> 
-            <Link to="/Admindeiregister" className="button">Create New DEI Officers</Link> 
+        <Link to={AppUrl.Admindeiregister} className="button">Create New DEI Officers</Link>
             </div>
 
     </div>

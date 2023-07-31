@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
 
 
 export default class Adminacademiaregistration extends Component {
@@ -21,21 +22,7 @@ export default class Adminacademiaregistration extends Component {
             <div>
                 <h1 className="dashhead">Admin Dashboard</h1>
 
-                
-                    <div className="center">
-                        <div className="wrapper">
-                            <div className="sidenav">
-                            <Link to="/Admindashboard"> Dashboard</Link>
-                            <Link to="/Adminapplicationstatus"> Application Status</Link>
-                            <Link to="/Adminviewjobs"> Job posted</Link>
-                            <Link to="/Adminviewurm"> URM Candidates</Link>
-                            <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                            <Link to="/Adminviewdei"> DEI Officers</Link>
-                            <Link to="/Adminviewacademia"> Academic Institution</Link>
-                            <Link to="/Admincontactus"> Contact Us Questions</Link>
-                            </div>
-                        </div>
-                    </div>
+                    <AdminSideMenu/>
 
                     <div className="container">
                         <section className="card">
@@ -51,7 +38,7 @@ export default class Adminacademiaregistration extends Component {
                                     <tr>
                                         <th><label htmlFor="adesc"><b>Description</b></label></th>
                                         <td>
-                                            <textarea rows="4" cols="54" id="adesc"
+                                            <textarea rows="4" cols="57" id="adesc"
                                                 placeholder="Enter your institution description"></textarea>
                                         </td>
                                     </tr>

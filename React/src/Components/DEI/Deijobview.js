@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Deijobview extends Component {
 	handleSubmit = (event) => {
@@ -31,7 +32,7 @@ export default class Deijobview extends Component {
 					<tr>
 						<th><label htmlFor="jdesc"><b>Job Description</b></label></th>
 						<td>
-							<textarea rows="4" cols="54" id="jdesc" name="jdesc"
+							<textarea rows="4" cols="57" id="jdesc" name="jdesc"
 								placeholder="Enter your institution description" defaultValue="A software developer with a focus on web application development and server-side, or database-side, programming is known as a back-end developer. The code that the website visitor cannot see is handled by back-end developers, but they are also in charge of making sure that the front end, or what the visitor sees and interacts with, is fully working as a whole."/>
 						</td>
 					</tr>
@@ -57,7 +58,7 @@ export default class Deijobview extends Component {
 
 			</form> <br />
 			<div className="button-container">
-              <Link to="/Deidashboard" className="button">Back to Dashboard</Link>
+              <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 

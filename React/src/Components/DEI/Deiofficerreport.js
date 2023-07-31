@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Deiofficerreport extends Component {
   render() {
@@ -17,7 +18,7 @@ export default class Deiofficerreport extends Component {
 			<br /><br />
 
 			<div className="button-container">
-            <Link to="/Deidashboard" className="button">Back to Dashboard</Link>
+            <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
 			</div>
 
 		</section>

@@ -1,80 +1,105 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { AppUrl, academiaPersonalInfo } from '../../Constants'
+import { withRouter } from '../../withRouter';
 
-export default class Profileacademia extends Component {
-    handleSaveButtonClick = (event) => {
-        event.preventDefault();
-    
-        // Extract values from the form fields
-        const institutionName = document.getElementById('aname').value;
-        const description = document.getElementById('adesc').value;
-        const researchArea = document.getElementById('reserachfocus').value;
-        const positions = document.getElementById('postions').value;
-        const email = document.getElementById('username').value;
-    
-        // Display the values in an alert
-        const message = `Institution Name: ${institutionName}\nDescription: ${description}\nResearch Area: ${researchArea}\nPositions: ${positions}\nEmail: ${email}`;
-        alert(message);
-      };
-  render() {
-    return (
-      <div>
-        <h1 className="dashhead">Academia Dashboard</h1>
 
-<div className="container">
-    <section className="card">
-        <form onClick={this.handleSaveButtonClick}> <br/>
-        <h2> Academia Profile</h2>
-            <table className="form-group">
-                <tbody>
-                <tr>
-                    <th><label htmlFor="aname"><b>Institution Name</b></label></th>
-                    <td> <input type="text" name="aname" id="aname" defaultValue="UTA"/></td>
-                </tr>
-                <tr>
-                    <th><label htmlFor="adesc"><b>Description</b></label></th>
-                    <td>
-                        <textarea rows="4" cols="54" id="adesc" name="adesc"
-                            placeholder="Enter your institution description" defaultValue="Welcome to UTA University, a renowned academic institution dedicated to empowering students with knowledge and skills to thrive in a dynamic and interconnected world. With a rich heritage of academic excellence, our institution offers a diverse range of programs and courses designed to foster intellectual curiosity, critical thinking, and real-world problem-solving abilities. Our distinguished faculty comprises experts and scholars from various fields who are committed to providing a transformative learning experience. At Global University, we emphasize holistic education, nurturing students' personal growth, and preparing them to become future leaders and global citizens. Join our vibrant campus community and unlock your potential for success and impact in an ever-evolving global society"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label htmlFor="reserachfocus"><b>Research Area</b></label></th>
-                    <td><input type="text" name="reserachfocus" id="reserachfocus" placeholder="Enter research area"
-                            defaultValue="Machine learning"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label htmlFor="postions"><b>Postions</b></label></th>
-                    <td><input type="text" name="postions" id="postions" placeholder="Enter positions" defaultValue="Faculty"/>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label htmlFor="username"><b>Email</b></label></th>
-                    <td><input type="email" name="username" id="username" placeholder="Enter email"
-                            defaultValue="uta@mavs.uta.edu" /> </td>
-                </tr>
-                <tr>
-                    <td colSpan="2">
+class Profileacademia extends Component {
+    constructor(props) {
+      super(props)
+    
+      this.state = {
+         institution_name:academiaPersonalInfo.institution_name,
+         email:academiaPersonalInfo.email,
+         desc:academiaPersonalInfo.desc,
+         research_focus_area:academiaPersonalInfo.research_focus_area,
+         position:academiaPersonalInfo.positions_offered
+      }
+    }
+
+    profileSubmitClick=(e)=>{
+        e.preventDefault();
+        const {institution_name,email,desc,research_focus_area,position} =this.state;
+        academiaPersonalInfo.institution_name = institution_name;
+        academiaPersonalInfo.email=email;
+        academiaPersonalInfo.desc=desc;
+        academiaPersonalInfo.research_focus_area=research_focus_area;
+        academiaPersonalInfo.positions_offered=position;
+
+        this.props.navigate('/Academiadashboard');
+        alert("Profile updated successfully.");
+    }
+    
+    render() {
+        const {institution_name,email,desc,research_focus_area,position} =this.state;
+        return (
+            <div>
+                <h1 className="dashhead">Academia Dashboard</h1>
+
+                <div className="container">
+                    <section className="card">
+                        <form onSubmit={this.profileSubmitClick}> <br />
+                            <h2> Academia Profile</h2>
+                            <table className="form-group">
+                                <tbody>
+                                    <tr>
+                                        <th><label htmlFor="aname"><b>Institution Name</b></label></th>
+                                        <td> <input type="text" name="" id="aname" value={institution_name} 
+                                        onChange={e=> this.setState({institution_name:e.target.value})}/></td>
+                                    </tr>
+                                    <tr>
+                                        <th><label htmlFor="adesc"><b>Description</b></label></th>
+                                        <td>
+                                            <textarea rows="4" cols="57" id="adesc"
+                                                placeholder="Enter your institution description"
+                                                onChange={e=> this.setState({desc:e.target.value})}
+                                                value={desc}>                                                    
+                                            </textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><label htmlFor="reserachfocus"><b>Research Area</b></label></th>
+                                        <td><input type="text" name="" id="reserachfocus" placeholder="Enter research area"
+                                            value={research_focus_area} 
+                                            onChange={e=> this.setState({research_focus_area:e.target.value})}/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><label htmlFor="postions"><b>Postions</b></label></th>
+                                        <td><input type="text" name="" id="postions" placeholder="Enter positions" 
+                                        value={position}
+                                        onChange={e=> this.setState({position:e.target.value})} />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><label htmlFor="username"><b>Email</b></label></th>
+                                        <td><input type="email" name="" id="username" placeholder="Enter email"
+                                            value={email} 
+                                            onChange={e=> this.setState({email:e.target.value})}/> </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="2">
+                                            <div className="button-container">
+                                                <button type="submit" href="" className="button">save</button>
+                                            </div>
+                                            <br />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </form> <br />
                         <div className="button-container">
-                                <button type="submit" className="button" >Save</button>	
+                            <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
                         </div>
-                        <br/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </section>
 
-        </form> <br />
-        <div className="button-container">
-           <Link to="/Academiadashboard" className="button">Back to Dashboard</Link>
-        </div>
-    </section>
-
-    <Footer/>
-</div>
-      </div>
-    )
-  }
+                    <Footer />
+                </div>
+            </div>
+        )
+    }
 }
+
+export default withRouter(Profileacademia);

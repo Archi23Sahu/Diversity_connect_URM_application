@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 
 export default class ServicesDEI extends Component {
@@ -22,7 +23,7 @@ export default class ServicesDEI extends Component {
                             </div>
                             <div className="dei-img"></div>
                             <div className="button-container">
-                                <Link to="/DEIOfficerRegistreation" className="button">Register</Link>
+                                <Link to={AppUrl.DEIOfficerRegistreation} className="button">Register</Link>
                             </div>
                         </div>
 

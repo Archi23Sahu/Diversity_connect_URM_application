@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Deipostjobs extends Component {
 	handleSubmit = (event) => {
@@ -30,7 +31,7 @@ export default class Deipostjobs extends Component {
 					<tr>
 						<th><label htmlFor="jdesc"><b>Job Description</b></label></th>
 						<td>
-							<textarea rows="4" cols="54" id="jdesc"
+							<textarea rows="4" cols="57" id="jdesc"
 							placeholder="Enter your institution description"></textarea>
 						</td>
 					</tr>
@@ -57,7 +58,7 @@ export default class Deipostjobs extends Component {
 		</section>
 		<br /><br />
 		<div className="button-container">
-        <Link to="/Deidashboard" className="button">Back to Dashboard</Link>
+        <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
 		</div>
 
 	</div>

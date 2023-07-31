@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Chatacademia extends Component {
   state = {
@@ -68,7 +69,7 @@ export default class Chatacademia extends Component {
                 <button type="submit" className="button">Send</button>
               </form>
               <div className="button-container">
-                <Link to="/Academiadashboard" className="button">Back to Dashboard</Link>
+                <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
               </div>
             </div>
           </section>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
+import { AppUrl } from '../../Constants'
 
 export default class Adminviewurm extends Component {
     handleDelete = (Name) => {
@@ -11,21 +13,7 @@ export default class Adminviewurm extends Component {
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
 
-
-    <div className="center">
-        <div className="wrapper">
-            <div className="sidenav">
-                <Link to="/Admindashboard"> Dashboard</Link>
-                <Link to="/Adminapplicationstatus"> Application Status</Link>
-                <Link to="/Adminviewjobs"> Job posted</Link>
-                <Link to="/Adminviewurm"> URM Candidates</Link>
-                <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                <Link to="/Adminviewdei"> DEI Officers</Link>
-                <Link to="/Adminviewacademia"> Academic Institution</Link>
-                <Link to="/Admincontactus"> Contact Us Questions</Link>
-            </div>
-        </div>
-    </div>
+    <AdminSideMenu/>
 
     <div className="admincontainer">
         <section className="admincard">
@@ -62,7 +50,7 @@ export default class Adminviewurm extends Component {
                     </td>
                     <td>
                         <div className="button-container"> 
-                        <Link to="/Adminupdateurm" className="button">Update</Link> 
+                        <Link to={AppUrl.Adminupdateurm} className="button">Update</Link> 
                         </div>
                     </td>
 
@@ -82,7 +70,7 @@ export default class Adminviewurm extends Component {
                     </td>
                     <td>
                         <div className="button-container"> 
-                         <Link to="/Adminupdateurm" className="button">Update</Link> 
+                         <Link to={AppUrl.Adminupdateurm} className="button">Update</Link> 
                         </div>
                     </td>
                 </tr>
@@ -101,7 +89,7 @@ export default class Adminviewurm extends Component {
                     </td>
                     <td>
                         <div className="button-container"> 
-                         <Link to="/Adminupdateurm" className="button">Update</Link> 
+                         <Link to={AppUrl.Adminupdateurm} className="button">Update</Link> 
                         </div>
                     </td>
                 </tr>
@@ -111,7 +99,7 @@ export default class Adminviewurm extends Component {
             
         </section><br/><br/>
         <div className="button-container"> 
-                <Link to="/Adminurmregistration" className="button">Create new URM Candidate</Link> 
+                <Link to={AppUrl.Adminurmregistration} className="button">Create new URM Candidate</Link> 
             </div>
       
 

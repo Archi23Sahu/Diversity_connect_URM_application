@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Chaturm extends Component {
   state = {
@@ -67,7 +68,7 @@ export default class Chaturm extends Component {
         <button type="submit" className="button">Send</button>
       </form>
       <div className="button-container">
-        <Link to="/Urmdashboard" className="button">Back to Dashboard</Link>
+        <Link to={AppUrl.Urmdashboard} className="button">Back to Dashboard</Link>
       </div>
     </div>
   </section>

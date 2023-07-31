@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
+
 
 export default class Chatdei extends Component {
     state = {
@@ -85,7 +87,7 @@ export default class Chatdei extends Component {
 
                                                         </section>
                                                         <div className="button-container">
-                                                            <Link to="/Deidashboard" className="button">Back to Dashboard</Link>
+                                                            <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
                                                         </div>
 
                                                         <Footer/>

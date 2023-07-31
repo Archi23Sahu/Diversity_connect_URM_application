@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
+
 
 export default class ForgetPassword extends Component {
     render() {
@@ -37,8 +39,8 @@ export default class ForgetPassword extends Component {
                             </div>
 
                             <div class="button-container">
-                                <Link to="/register" class="button">Create a New Account? Signup</Link>
-                                <Link to="/login" class="button">Return to login</Link>
+                                <Link to={AppUrl.register} class="button">Create a New Account? Signup</Link>
+                                <Link to={AppUrl.login} class="button">Return to login</Link>
 
                             </div>
                         </div>

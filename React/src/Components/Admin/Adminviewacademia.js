@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
+import { AppUrl } from '../../Constants'
+
 
 export default class Adminviewacademia extends Component {
     handleDelete = (position) => {
@@ -11,21 +14,7 @@ export default class Adminviewacademia extends Component {
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
 
-
-    <div className="center">
-        <div className="wrapper">
-            <div className="sidenav">
-                <Link to="/Admindashboard"> Dashboard</Link>
-                <Link to="/Adminapplicationstatus"> Application Status</Link>
-                <Link to="/Adminviewjobs"> Job posted</Link>
-                <Link to="/Adminviewurm"> URM Candidates</Link>
-                <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                <Link to="/Adminviewdei"> DEI Officers</Link>
-                <Link to="/Adminviewacademia"> Academic Institution</Link>
-                <Link to="/Admincontactus"> Contact Us Questions</Link>
-            </div>
-        </div>
-    </div>
+    <AdminSideMenu/>
 
     <div className="container">
         <section className="card">
@@ -41,7 +30,7 @@ export default class Adminviewacademia extends Component {
                             <th>Update </th>
                         </tr>
                     </thead>
-
+                <tbody>
                 <tr>
                     <td> UTA </td>
                     <td> Founded in 1895, The University of Texas at Arlington is a Carnegie Research 1 institution
@@ -53,7 +42,7 @@ export default class Adminviewacademia extends Component {
                     </td>
                     <td>
                         <div className="button-container"> 
-                        <Link to="/Adminupdateacademia" className="button">Update</Link>
+                        <Link to={AppUrl.Adminupdateacademia} className="button">Update</Link>
                          </div>
                     </td>
                 </tr>
@@ -68,7 +57,7 @@ export default class Adminviewacademia extends Component {
                     </td>
                     <td>
                         <div className="button-container"> 
-                        <Link to="/Adminupdateacademia" className="button">Update</Link>
+                        <Link to={AppUrl.Adminupdateacademia} className="button">Update</Link>
                          </div>
                     </td>
                 </tr>
@@ -83,18 +72,18 @@ export default class Adminviewacademia extends Component {
                     </td>
                     <td>
                         <div className="button-container"> 
-                        <Link to="/Adminupdateacademia" className="button">Update</Link>
+                        <Link to={AppUrl.Adminupdateacademia} className="button">Update</Link>
                          </div>
 
                     </td>
                 </tr>
 
-
+                </tbody>
             </table>
            
         </section>
         <div className="button-container"> 
-            <Link to="/Adminacademiaregistration" className="button">Create new Academic Institution</Link>
+            <Link to={AppUrl.Adminacademiaregistration} className="button">Create new Academic Institution</Link>
             </div>
         <Footer/>
 

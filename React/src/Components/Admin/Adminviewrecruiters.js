@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
+import { AppUrl } from '../../Constants'
 
 export default class Adminviewrecruiters extends Component {
     handleDelete = (name) => {
@@ -12,20 +14,7 @@ export default class Adminviewrecruiters extends Component {
         <h1 className="dashhead">Admin Dashboard</h1>
 
 <div className="secondarycontent">
-    <div className="center">
-        <div className="wrapper">
-            <div className="sidenav">
-                <Link to="/Admindashboard"> Dashboard</Link>
-                <Link to="/Adminapplicationstatus"> Application Status</Link>
-                <Link to="/Adminviewjobs"> Job posted</Link>
-                <Link to="/Adminviewurm"> URM Candidates</Link>
-                <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                <Link to="/Adminviewdei"> DEI Officers</Link>
-                <Link to="/Adminviewacademia"> Academic Institution</Link>
-                <Link to="/Admincontactus"> Contact Us Questions</Link>
-            </div>
-        </div>
-    </div>
+    <AdminSideMenu/>
 
     <div className="container">
         <section className="card">
@@ -53,7 +42,7 @@ export default class Adminviewrecruiters extends Component {
                     <div className="">   <button className="button" onClick={() => this.handleDelete('Recruiter1')}>   Delete   </button>  </div>
                     </td>
                     <td>
-                        <div className=""> <Link to="/Adminupdaterecruiters" className="button">Update</Link> </div>
+                        <div className=""> <Link to={AppUrl.Adminupdaterecruiters} className="button">Update</Link> </div>
                     </td>
                 </tr>
                 <tr>
@@ -66,7 +55,7 @@ export default class Adminviewrecruiters extends Component {
                     <div className="">   <button className="button" onClick={() => this.handleDelete('Recruiter2')}>   Delete   </button>  </div>
                     </td>
                     <td>
-                        <div className=""> <Link to="/Adminupdaterecruiters" className="button">Update</Link> </div>
+                        <div className=""> <Link to={AppUrl.Adminupdaterecruiters} className="button">Update</Link> </div>
                     </td>
                 </tr>
                 <tr>
@@ -79,14 +68,14 @@ export default class Adminviewrecruiters extends Component {
                     <div className="">   <button className="button" onClick={() => this.handleDelete('Recruiter3')}>   Delete   </button>  </div>
                     </td>
                     <td>
-                        <div className=""> <Link to="/Adminupdaterecruiters" className="button">Update</Link> </div>
+                        <div className=""> <Link to={AppUrl.Adminupdaterecruiters} className="button">Update</Link> </div>
                     </td>
                 </tr>
 
                 </tbody>
             </table>
             <div className="button-container"> 
-            <Link to="/Adminrecruiterregistration" className="button">Create new Recruiter</Link>
+            <Link to={AppUrl.Adminrecruiterregistration} className="button">Create new Recruiter</Link>
             </div>
         </section>
 

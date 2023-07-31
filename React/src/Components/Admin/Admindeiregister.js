@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import AdminSideMenu from './AdminSideMenu'
 
 
 export default class Admindeiregister extends Component {
@@ -24,21 +25,7 @@ export default class Admindeiregister extends Component {
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
 
-
-    <div className="center">
-        <div className="wrapper">
-            <div className="sidenav">
-                <Link to="/Admindashboard"> Dashboard</Link>
-                <Link to="/Adminapplicationstatus"> Application Status</Link>
-                <Link to="/Adminviewjobs"> Job posted</Link>
-                <Link to="/Adminviewurm"> URM Candidates</Link>
-                <Link to="/Adminviewrecruiters"> Recruiters</Link>
-                <Link to="/Adminviewdei"> DEI Officers</Link>
-                <Link to="/Adminviewacademia"> Academic Institution</Link>
-                <Link to="/Admincontactus"> Contact Us Questions</Link>
-            </div>
-        </div>
-    </div>
+    <AdminSideMenu/>
 
     <div className="container">
         <section className="card">
@@ -52,7 +39,7 @@ export default class Admindeiregister extends Component {
                     </tr>
                     <tr>
                         <th><label htmlFor="ddesc"><b>Description</b></label></th>
-                        <td> <textarea rows="3" cols="54" id="ddesc" placeholder="Enter description"></textarea>
+                        <td> <textarea rows="3" cols="57" id="ddesc" placeholder="Enter description"></textarea>
                         </td>
                     </tr>
                     <tr>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
 
 export default class Profiledeiofficer extends Component {
 	handleSaveClick = (event) => {
@@ -34,7 +35,7 @@ export default class Profiledeiofficer extends Component {
 					</tr>
 					<tr>
 						<th><label htmlFor="ddesc"><b>Description</b></label></th>
-						<td> <textarea rows="3" cols="54" id="ddesc" name="ddesc"
+						<td> <textarea rows="3" cols="57" id="ddesc" name="ddesc"
 								placeholder="Enter description" defaultValue="Description of dei officer"/></td>
 					</tr>
 					<tr>
@@ -78,7 +79,7 @@ export default class Profiledeiofficer extends Component {
 
 			</form> <br />
 			<div className="button-container">
-            <Link to="/Deidashboard" className="button">Back to Dashboard</Link>
+            <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 		<Footer/>

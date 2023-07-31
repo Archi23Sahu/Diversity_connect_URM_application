@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../Footer/Footer'
+import { AppUrl } from '../../Constants'
+
 
 export default class Home extends Component {
     render() {
@@ -11,8 +13,8 @@ export default class Home extends Component {
                     <p className="center">Unleash Your Remarkable Potential with URM <br/> Empowering Success, Igniting Excellence!</p>
 
                     <div className="button-container">
-                        <Link to="/login" className="button">Login</Link>
-                        <Link to="/register" className="button">Register</Link>
+                        <Link to={AppUrl.login} className="button">Login</Link>
+                        <Link to={AppUrl.register} className="button">Register</Link>
                     </div>
                 </main>
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
+
 
 export default class URMCandidateService extends Component {
     render() {
@@ -17,7 +19,7 @@ export default class URMCandidateService extends Component {
                             </div>
                             <div className="urm-img"></div>
                             <div className="button-container">
-                                <Link to="/URMCandidateRegistreation" className="button">Register</Link>
+                                <Link to={AppUrl.URMCandidateRegistreation} className="button">Register</Link>
                             </div>
                         </div>
 

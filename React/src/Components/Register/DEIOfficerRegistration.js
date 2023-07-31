@@ -33,7 +33,7 @@ export default class DEIOfficerRegistration extends Component {
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="ddesc"><b>Description</b></label></th>
-                                            <td> <textarea rows="3" cols="54" id="ddesc" placeholder="Enter description"></textarea></td>
+                                            <td> <textarea rows="3" cols="57" id="ddesc" placeholder="Enter description"></textarea></td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="role"><b>Role</b></label></th>

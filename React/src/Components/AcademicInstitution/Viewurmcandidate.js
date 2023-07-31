@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
+
 
 export default class Viewurmcandidate extends Component {
 	handleSearch = (event) => {
@@ -104,8 +106,8 @@ export default class Viewurmcandidate extends Component {
 				</tbody>
 			</table>
 			<div className="button-container">
-                <Link to="/Academiadashboard" className="button">Back to Dashboard</Link>
 			</div>
+							<Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
 
 		</section>
 		<Footer/>

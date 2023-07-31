@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
+import { AppUrl } from '../../Constants'
+
 
 export default class Jobposts extends Component {
 	handleSubmit = (event) => {
@@ -31,7 +33,7 @@ export default class Jobposts extends Component {
 					<tr>
 						<th><label htmlFor="jdesc"><b>Job Description</b></label></th>
 						<td>
-							<textarea rows="4" cols="54" id="jdesc" name="jdesc"
+							<textarea rows="4" cols="57" id="jdesc" name="jdesc"
 								placeholder="Enter your institution description"></textarea>
 						</td>
 					</tr>
@@ -56,7 +58,7 @@ export default class Jobposts extends Component {
 
 			</form> <br />
 			<div className="button-container">
-              <Link to="/Academiadashboard" className="button">Back to Dashboard</Link>
+              <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 

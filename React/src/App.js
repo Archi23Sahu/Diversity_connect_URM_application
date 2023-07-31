@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import React, { Component } from 'react';
+import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header/Header';
@@ -15,6 +15,7 @@ import AcademicInstitutionRegistration from './Components/Register/AcademicInsti
 import DEIOfficerRegistration from './Components/Register/DEIOfficerRegistration';
 import RecruiterRegistration from './Components/Register/RecruiterRegistration';
 import URMCandidateRegistration from './Components/Register/URMCandidateRegistration';
+import { AppUrl, academiaPersonalInfo } from './Constants';
 import About from './Components/AboutUs/About';
 import ContactUs from './Components/ContactUs/ContactUs';
 import ForgetPassword from './Components/ForgetPassword/ForgetPassword';
@@ -60,7 +61,6 @@ import Adminapplicationstatus from './Components/Admin/Adminapplicationstatus';
 import Adminrecruiterregistration from './Components/Admin/Adminrecruiterregistration';
 import Adminurmregistration from './Components/Admin/Adminurmregistration';
 import Admindeiregister from './Components/Admin/Admindeiregister';
-import Adminpostjob from './Components/Admin/Adminpostjob';
 import Recruiterdashboard from './Components/Recruiter/Recruiterdashboard';
 import Applicantrecruiter from './Components/Recruiter/Applicantrecruiter';
 import Chatrecruiter from './Components/Recruiter/Chatrecruiter';
@@ -68,104 +68,115 @@ import Jobviewrecruiter from './Components/Recruiter/Jobviewrecruiter';
 import Postjobsrecruiter from './Components/Recruiter/Postjobsrecruiter';
 import Profilerecruiter from './Components/Recruiter/Profilerecruiter';
 import Viewurmrecruiter from './Components/Recruiter/Viewurmrecruiter';
+import Adminpostjob from './Components/Admin/Adminpostjob';
+import Logout from './Components/Logout/logout';
 
-
-// function App() {
-  class App extends Component{
-    constructor(props) {
-      super(props)
-    
-      this.state = {
-         isLogin:false
-      }
-      this.handleIsLogin =this.handleIsLogin.bind();
-    }
+class App extends Component{
+  constructor(props) {
+    super(props)
   
-    
-    handleIsLogin=(isLoginFromLoginComponent)=>{
-      console.log('isLogin '+isLoginFromLoginComponent);
-      this.setState({isLogin:isLoginFromLoginComponent})
+    this.state = {
+       isLogin:false,
     }
-    render(){
-    return (
+    this.handleIsLogin =this.handleIsLogin.bind();
+  }
+
+  componentDidMount() {
+    // Retrieve the state from localStorage on component mount
+    const storedState = localStorage.getItem('myComponentState');
+    if (storedState) {
+      this.setState(JSON.parse(storedState));
+    }
+  }
+
+  componentDidUpdate() {
+    // Save the state to localStorage whenever it is updated
+    localStorage.setItem('myComponentState', JSON.stringify(this.state));
+  }
+
+  
+  handleIsLogin=(isLoginFromLoginComponent)=>{//trigger back handling : true return
+    this.setState({isLogin:isLoginFromLoginComponent}) //true
+  }
+  
+  render(){
+  return (
     <>
     <Router>
     <Header isLogin={this.state.isLogin}/>
     <Routes>
-          <Route path="/" element={<Home/>}></Route>
-          <Route path="/login" element={<Login onLogin={this.handleIsLogin}/>}></Route>
-          <Route path="/register" element={<Role/>}></Route>
-          <Route path="/urmCandidateService" element={<URMCandidateService/>}></Route>
-          <Route path="/servicesAcademia" element={<ServicesAcademia/>}></Route>
-          <Route path="/servicesDEI" element={<ServicesDEI/>}></Route>
-          <Route path="/serviceRecruiter" element={<ServicesRecruiter/>}></Route>
-          <Route path="/AcademicInstitutionRegistreation" element={<AcademicInstitutionRegistration/>}></Route>
-          <Route path="/DEIOfficerRegistreation" element={<DEIOfficerRegistration/>}></Route>
-          <Route path="/RecruiterRegistreation" element={<RecruiterRegistration/>}></Route>
-          <Route path="/URMCandidateRegistreation" element={<URMCandidateRegistration/>}></Route>
-          <Route path="/aboutUs" element={<About/>}></Route>
-          <Route path="/contactUs" element={<ContactUs/>}></Route>
-          <Route path="/forgetPassword" element={<ForgetPassword/>}></Route>
-          <Route path="/Academiadashboard" element={<Academiadashboard/>}></Route>
-          <Route path="/Addfaculty" element={<Addfaculty/>}></Route>
-          <Route path="/Applicantsacademia" element={<Applicantsacademia/>}></Route>
-          <Route path="/Bookmarkedcandidates" element={<Bookmarkedcandidates/>}></Route>
-          <Route path="/Chatacademia" element={<Chatacademia/>}></Route>
-          <Route path="/Academiajobview" element={<Academiajobview/>}></Route>
-          <Route path="/Jobposts" element={<Jobposts/>}></Route>
-          <Route path="/Profileacademia" element={<Profileacademia/>}></Route>
-          <Route path="/Viewurmcandidate" element={<Viewurmcandidate/>}></Route>
-          <Route path="/Urmdashboard" element={<Urmdashboard/>}></Route>
-          <Route path="/Profileurm" element={<Profileurm/>}></Route>
-          <Route path="/Applicanturm" element={<Applicanturm/>}></Route>
-          <Route path="/Jobviewurm" element={<Jobviewurm/>}></Route>
-          <Route path="/Urmcheckjobroles" element={<Urmcheckjobroles/>}></Route>
-          <Route path="/Chaturm" element={<Chaturm/>}></Route>
-          <Route path="/Deidashboard" element={<Deidashboard/>}></Route>
-          <Route path="/Chatdei" element={<Chatdei/>}></Route>
-          <Route path="/Deiapplicant" element={<Deiapplicant/>}></Route>
-          <Route path="/Deiapprovepostjobs" element={<Deiapprovepostjobs/>}></Route>
-          <Route path="/Deijobview" element={<Deijobview/>}></Route>
-          <Route path="/Deiofficerreport" element={<Deiofficerreport/>}></Route>
-          <Route path="/Deiviewurmcandidate" element={<Deiviewurmcandidate/>}></Route>
-          <Route path="/Deipostjobs" element={<Deipostjobs/>}></Route>
-          <Route path="/Profiledeiofficer" element={<Profiledeiofficer/>}></Route>
-          <Route path="/Admindashboard" element={<Admindashboard/>}></Route>
-          <Route path="/Adminviewacademia" element={<Adminviewacademia/>}></Route>
-          <Route path="/Adminacademiaregistration" element={<Adminacademiaregistration/>}></Route>
-          <Route path="/Adminviewdei" element={<Adminviewdei/>}></Route>
-          <Route path="/Adminviewjobs" element={<Adminviewjobs/>}></Route>
-          <Route path="/Adminviewurm" element={<Adminviewurm/>}></Route>
-          <Route path="/Adminviewrecruiters" element={<Adminviewrecruiters/>}></Route>
-          <Route path="/Chatadmin" element={<Chatadmin/>}></Route>
-          <Route path="/Adminupdateacademia" element={<Adminupdateacademia/>}></Route>
-          <Route path="/Adminupdatedei" element={<Adminupdatedei/>}></Route>
-          <Route path="/Adminupdatejobs" element={<Adminupdatejobs/>}></Route>
-          <Route path="/Adminupdaterecruiters" element={<Adminupdaterecruiters/>}></Route>
-          <Route path="/Adminupdateurm" element={<Adminupdateurm/>}></Route>
-          <Route path="/Admincontactus" element={<Admincontactus/>}></Route>
-          <Route path="/Adminapplicationstatus" element={<Adminapplicationstatus/>}></Route>
-          <Route path="/Adminrecruiterregistration" element={<Adminrecruiterregistration/>}></Route>
-          <Route path="/Adminurmregistration" element={<Adminurmregistration/>}></Route>
-          <Route path="/Admindeiregister" element={<Admindeiregister/>}></Route>
-          <Route path="/Adminpostjob" element={<Adminpostjob/>}></Route>
-          <Route path="/Recruiterdashboard" element={<Recruiterdashboard/>}></Route>
-          <Route path="/Applicantrecruiter" element={<Applicantrecruiter/>}></Route>
-          <Route path="/Chatrecruiter" element={<Chatrecruiter/>}></Route>
-          <Route path="/Jobviewrecruiter" element={<Jobviewrecruiter/>}></Route>
-          <Route path="/Postjobsrecruiter" element={<Postjobsrecruiter/>}></Route>
-          <Route path="/Profilerecruiter" element={<Profilerecruiter/>}></Route>
-          <Route path="/Viewurmrecruiter" element={<Viewurmrecruiter/>}></Route>
-          
-          
-          
-          
+          <Route path={AppUrl.base} element={<Home/>}></Route>
+          <Route path={AppUrl.login} element={<Login onLogin={this.handleIsLogin}/>}></Route>
+          <Route path={AppUrl.register} element={<Role/>}></Route>
+          <Route path={AppUrl.urmCandidateService} element={<URMCandidateService/>}></Route>
+          <Route path={AppUrl.servicesAcademia} element={<ServicesAcademia/>}></Route>
+          <Route path={AppUrl.servicesDEI} element={<ServicesDEI/>}></Route>
+          <Route path={AppUrl.serviceRecruiter} element={<ServicesRecruiter/>}></Route>
+          <Route path={AppUrl.AcademicInstitutionRegistreation} element={<AcademicInstitutionRegistration/>}></Route>
+          <Route path={AppUrl.DEIOfficerRegistreation} element={<DEIOfficerRegistration/>}></Route>
+          <Route path={AppUrl.RecruiterRegistreation} element={<RecruiterRegistration/>}></Route>
+          <Route path={AppUrl.URMCandidateRegistreation} element={<URMCandidateRegistration/>}></Route>
+          <Route path={AppUrl.aboutUs} element={<About/>}></Route>
+          <Route path={AppUrl.contactUs} element={<ContactUs/>}></Route>
+          <Route path={AppUrl.forgetPassword} element={<ForgetPassword/>}></Route>
+          <Route path={AppUrl.Academiadashboard} element={<Academiadashboard/>}></Route>
+          <Route path={AppUrl.Addfaculty} element={<Addfaculty/>}></Route>
+          <Route path={AppUrl.Applicantsacademia} element={<Applicantsacademia/>}></Route>
+          <Route path={AppUrl.Bookmarkedcandidates} element={<Bookmarkedcandidates/>}></Route>
+          <Route path={AppUrl.Chatacademia} element={<Chatacademia/>}></Route>
+          <Route path={AppUrl.Academiajobview} element={<Academiajobview/>}></Route>
+          <Route path={AppUrl.Jobposts} element={<Jobposts/>}></Route>
+          <Route path={AppUrl.Profileacademia} element={<Profileacademia/>}></Route>
+          <Route path={AppUrl.Viewurmcandidate} element={<Viewurmcandidate/>}></Route>
+          <Route path={AppUrl.Urmdashboard} element={<Urmdashboard/>}></Route>
+          <Route path={AppUrl.Profileurm} element={<Profileurm/>}></Route>
+          <Route path={AppUrl.Applicanturm} element={<Applicanturm/>}></Route>
+          <Route path={AppUrl.Jobviewurm} element={<Jobviewurm/>}></Route>
+          <Route path={AppUrl.Urmcheckjobroles} element={<Urmcheckjobroles/>}></Route>
+          <Route path={AppUrl.Chaturm} element={<Chaturm/>}></Route>
+          <Route path={AppUrl.Deidashboard} element={<Deidashboard/>}></Route>
+          <Route path={AppUrl.Chatdei} element={<Chatdei/>}></Route>
+          <Route path={AppUrl.Deiapplicant} element={<Deiapplicant/>}></Route>
+          <Route path={AppUrl.Deiapprovepostjobs} element={<Deiapprovepostjobs/>}></Route>
+          <Route path={AppUrl.Deijobview} element={<Deijobview/>}></Route>
+          <Route path={AppUrl.Deiofficerreport} element={<Deiofficerreport/>}></Route>
+          <Route path={AppUrl.Deiviewurmcandidate} element={<Deiviewurmcandidate/>}></Route>
+          <Route path={AppUrl.Deipostjobs} element={<Deipostjobs/>}></Route>
+          <Route path={AppUrl.Profiledeiofficer} element={<Profiledeiofficer/>}></Route>
+          <Route path={AppUrl.Admindashboard} element={<Admindashboard/>}></Route>
+          <Route path={AppUrl.Adminviewacademia} element={<Adminviewacademia/>}></Route>
+          <Route path={AppUrl.Adminacademiaregistration} element={<Adminacademiaregistration/>}></Route>
+          <Route path={AppUrl.Adminviewdei} element={<Adminviewdei/>}></Route>
+          <Route path={AppUrl.Adminviewjobs} element={<Adminviewjobs/>}></Route>
+          <Route path={AppUrl.Adminviewurm} element={<Adminviewurm/>}></Route>
+          <Route path={AppUrl.Adminviewrecruiters} element={<Adminviewrecruiters/>}></Route>
+          <Route path={AppUrl.Chatadmin} element={<Chatadmin/>}></Route>
+          <Route path={AppUrl.Adminupdateacademia} element={<Adminupdateacademia/>}></Route>
+          <Route path={AppUrl.Adminupdatedei} element={<Adminupdatedei/>}></Route>
+          <Route path={AppUrl.Adminupdatejobs} element={<Adminupdatejobs/>}></Route>
+          <Route path={AppUrl.Adminupdaterecruiters} element={<Adminupdaterecruiters/>}></Route>
+          <Route path={AppUrl.Adminupdateurm} element={<Adminupdateurm/>}></Route>
+          <Route path={AppUrl.Admincontactus} element={<Admincontactus/>}></Route>
+          <Route path={AppUrl.Adminapplicationstatus} element={<Adminapplicationstatus/>}></Route>
+          <Route path={AppUrl.Adminrecruiterregistration} element={<Adminrecruiterregistration/>}></Route>
+          <Route path={AppUrl.Adminurmregistration} element={<Adminurmregistration/>}></Route>
+          <Route path={AppUrl.Admindeiregister} element={<Admindeiregister/>}></Route>
+          <Route path={AppUrl.Recruiterdashboard} element={<Recruiterdashboard/>}></Route>
+          <Route path={AppUrl.Applicantrecruiter} element={<Applicantrecruiter/>}></Route>
+          <Route path={AppUrl.Chatrecruiter} element={<Chatrecruiter/>}></Route>
+          <Route path={AppUrl.Jobviewrecruiter} element={<Jobviewrecruiter/>}></Route>
+          <Route path={AppUrl.Postjobsrecruiter} element={<Postjobsrecruiter/>}></Route>
+          <Route path={AppUrl.Profilerecruiter} element={<Profilerecruiter/>}></Route>
+          <Route path={AppUrl.Viewurmrecruiter} element={<Viewurmrecruiter/>}></Route>
+          <Route path={AppUrl.Adminpostjob} element={<Adminpostjob/>}></Route>
+          <Route path={AppUrl.Logout} element={<Logout onLogin={this.handleIsLogin}/>}></Route>
+          {/* <Route path={AppUrl.Blog} element={<Blog />}></Route> */}
         </Routes>
     </Router>
 
     </>
   );
-}
+  }
 }
 
 export default App;
