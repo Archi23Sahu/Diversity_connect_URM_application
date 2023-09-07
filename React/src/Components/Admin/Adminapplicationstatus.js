@@ -2,17 +2,34 @@ import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import AdminSideMenu from './AdminSideMenu'
-import { candidateApplicationStats } from '../../Constants'
+import AdminService from '../../Services/AdminService';
 
 export default class Adminapplicationstatus extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fetchapplication: []
+        };
+    }
+    componentDidMount() {
+        // Fetch personal information and faculty details
+       // this.fetchPersonalInfo();
+       
+            
+        this.showCandidate();
+      }
+    showCandidate(){
+        AdminService.fetchData()
+        .then((response)=>{
+            console.log(response);
+           this.setState({ fetchapplication: response.data.phpresult});
+        }).catch((error) => {
+            alert("error " + error);
+        });
+    }
+
     render() {
-        const candidateStatusDetails = candidateApplicationStats.map(
-            (candidateAppstatus) => <tr key={candidateAppstatus.applicationId}>
-                <td>{candidateAppstatus.jobId}</td>
-                <td>{candidateAppstatus.applicationId}</td>
-                <td>{candidateAppstatus.status}</td>
-                <td>{candidateAppstatus.studentId}</td>
-            </tr>)
+        const { fetchapplication } = this.state;
         return (
             <div>
                 <h1 className="dashhead">Admin Dashboard</h1>
@@ -31,8 +48,14 @@ export default class Adminapplicationstatus extends Component {
 
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {candidateStatusDetails}
+                                <tbody  >
+                                    {fetchapplication.map(
+                                        (candidateAppstatus) => <tr key={candidateAppstatus.App_Id}>
+                                            <td >{candidateAppstatus.JID}</td>
+                                            <td>{candidateAppstatus.App_Id}</td>
+                                            <td>{candidateAppstatus.STATUS}</td>
+                                            <td>{candidateAppstatus.UID}</td>
+                                        </tr>)}
                                 </tbody>
                             </table>
 

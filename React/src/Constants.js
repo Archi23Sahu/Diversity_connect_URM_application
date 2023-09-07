@@ -1,3 +1,5 @@
+import { Component } from "react"
+
 //application url related
 export const AppUrl ={
     base:"/",
@@ -58,7 +60,7 @@ export const AppUrl ={
     Chatadmin:"/Chatadmin", 
     Adminupdateacademia:"/Adminupdateacademia", 
     Adminupdatedei:"/Adminupdatedei" ,
-    Adminupdatejobs:"/Adminupdatejobs", 
+    Adminupdatejobs:"/Adminupdatejobs/:id" , 
     Adminupdaterecruiters:"/Adminupdaterecruiters", 
     Adminupdateurm:"/Adminupdateurm", 
     Admincontactus:"/Admincontactus" ,
@@ -77,36 +79,6 @@ export const AppUrl ={
      
     
 }
-
-//login information related
-export const loginReponse = [
-    {
-        email:"Academia@gmail.com",
-        pass:"12345",
-        role:"Academia"
-    },
-    {
-        email:"Candidate@gmail.com",
-        pass:"12345",
-        role:"Candidate"
-    },
-    {
-        email:"DEI@gmail.com",
-        pass:"12345",
-        role:"Dei"
-    },
-    {
-        email:"Recruiter@gmail.com",
-        pass:"12345",
-        role:"Recruiter"
-    },
-    {
-        email:"Admin@gmail.com",
-        pass:"12345",
-        role:"Admin"
-    }
-
-]
 
 //academia related:
 //academia personal information:   
@@ -179,3 +151,205 @@ export const jobPosted=[{
     "date":"07/16/2023",
     "location":"Dallas"
 }]
+
+export const loginReponse = [
+    {
+        email:"academia@gmail.com",
+        pass:"12345",
+        role:"Academia"
+    },
+    {
+        email:"Candidate@gmail.com",
+        pass:"12345",
+        role:"Candidate"
+    },
+    {
+        email:"DEI@gmail.com",
+        pass:"12345",
+        role:"Dei"
+    },
+    {
+        email:"Recruiter@gmail.com",
+        pass:"12345",
+        role:"Recruiter"
+    },
+    {
+        email:"Admin@gmail.com",
+        pass:"12345",
+        role:"Admin"
+    }
+]
+
+export const role={
+    "Academia":"Academia",
+    "Candidate":"Candidate",
+    "Dei":"Dei",
+    "Recruiter":"Recruiter",
+    "Admin":"Admin",
+    "Addfaculty":"Addfaculty",
+    "Jobposted":"Jobposted",
+    "Fetchfaculty":"Fetchfaculty",
+    "Applicationstatus": "Applicationstatus",
+    "FlagCandidate": "FlagCandidate",
+    "Viewjobs":"Viewjobs",
+    "Deletejobs":"Deletejobs",
+    "Updatejobs":"Updatejobs",
+    "Jobchange":"Jobchange",
+    "AcademiaProfiledetails":"AcademiaProfiledetails",
+    "Updateacademiaprofile":"Updateacademiaprofile",
+    "AcademiaProfilechange":"AcademiaProfilechange",
+    "Academiafetchjobs":"Academiafetchjobs",
+    "AcademiaupdateJobs":"AcademiaupdateJobs",
+    "AcademiaJobdetailsupdate":"AcademiaJobdetailsupdate",
+    "Getapplicants":"Getapplicants",
+    "Academiabookmark":"Academiabookmark",
+    "GetURMCandidate":"GetURMCandidate",
+    "Viewdei":"Viewdei",
+    "Deletedei":"Deletedei",
+    "Updatedei":"Updatedei",
+    "DEIchange":"DEIchange",
+    "Deleteurm":"Deleteurm",
+    "Viewurm":"Viewurm",
+    "Updateurm":"Updateurm",
+    "URMchange":"URMchange",
+    "Viewacademia":"Viewacademia",
+    "Updateacademia":"Updateacademia",
+    "Deleteacademia":"Deleteacademia",
+    "Academiachange":"Academiachange",
+    "URMProfiledetails":"URMProfiledetails",
+    "URMProfilechange":"URMProfilechange",
+    "Updateurmprofile":"Updateurmprofile",
+    "Viewjobsurm":"Viewjobsurm",
+    "applyJobs":"applyJobs",
+    "Viewappliedjobsurm":"Viewappliedjobsurm",
+    "Fetchapplicationstatus":"Fetchapplicationstatus",
+    "DEIProfiledetails":"DEIProfiledetails",
+    "Updatedeiprofile":"Updatedeiprofile",
+    "DEIchangeprofile":"DEIchangeprofile",
+    "GetURMCandidateforDEI":"GetURMCandidateforDEI",
+    "Jobposteddei":"Jobposteddei",
+    "Viewjobsdei":"Viewjobsdei",
+    "declineJobs":"declineJobs",
+    "acceptJobs":"acceptJobs",
+    "DeidashboardfetchJobs":"DeidashboardfetchJobs",
+    "Conatctdeatils":"Conatctdeatils",
+    "Totalcountappliedjobsurm":"Totalcountappliedjobsurm",
+    "Totalcountappliedjobsdei":"Totalcountappliedjobsdei",
+    "Totalcountappliedjobsacademia":"Totalcountappliedjobsacademia",
+    "URMupdateJobs":"URMupdateJobs"
+
+
+}
+
+export const backendUrl={
+  /* base:"http://127.0.0.1:8003",
+     login:"/login.php",
+     register:"/register.php",
+     contactus: "/contactus.php",
+     registerURM:"/registerURM.php",
+     adminDashboard:"/adminDashboard.php",
+     adminDashboardHeader:"/adminDashboardHeader.php",
+     academic:"/academic.php",
+     admin:"/admin.php",
+     urm:"/urm.php",
+     dei:"/dei.php",
+     forgetPassword:"/forgetPassword.php",
+     adminContact:"/adminContact.php"*/
+    base:"https://axs4551.uta.cloud/",
+   register:"URM_PHP/register.php",
+    login:"URM_PHP/login.php",
+    contactus: "URM_PHP/contactus.php",
+    registerURM:"URM_PHP/registerURM.php",
+    adminDashboard:"URM_PHP/adminDashboard.php",
+    adminDashboardHeader:"URM_PHP/adminDashboardHeader.php",
+    academic:"URM_PHP/academic.php",
+    admin:"URM_PHP/admin.php",
+    urm:"URM_PHP/urm.php",
+    dei:"URM_PHP/dei.php",
+    forgetPassword:"URM_PHP/forgetPassword.php",
+    adminContact:"URM_PHP/adminContact.php"
+}
+
+
+    /*export const backendUrl={
+
+        base:"http://127.0.0.1:8003",
+    
+        //register:"/register.php",
+    
+        register:"/api/register",
+    
+        //login:"/login.php",
+    
+        login:"/api/login",
+    
+        //contactus: "/contactus.php",
+        contactus: "/api/contactus",
+    
+        //registerURM:"/registerURM.php",
+    
+        registerURM:"/api/registerURM",
+    
+        //adminDashboard:"/adminDashboard.php",
+    
+        adminDashboard:"/api/adminDashboard",
+    
+        //adminDashboardHeader:"/adminDashboardHeader.php",
+    
+        adminDashboardHeader:"/api/adminDashboardHeader",
+    
+        academic:"/api/academic",
+    
+        //academic:"/academic.php",
+    
+        //admin:"/admin.php",
+    
+        admin:"/api/admin",
+    
+        //urm:"/urm.php",
+    
+        urm:"/api/urm",
+    
+        //dei:"/dei.php",
+    
+        dei:"/api/dei",
+    
+        //forgetPassword:"/forgetPassword.php",
+    
+        forgetPassword:"/api/forgetPassword",
+    
+        //adminContact:"/adminContact.php",
+    
+        adminContact:"/api/adminContact",
+    
+        //addfaculty:"api/addFaculty"
+
+       /* base:"https://axs4551.uta.cloud",
+
+        register:"/URM_PHP_APP/routes/api/register",
+    
+        login:"/URM_PHP_APP/routes/api/login",
+        contactus: "/URM_PHP_APP/routes/api/contactus",
+    
+        registerURM:"/URM_PHP_APP/routes/api/registerURM",
+    
+        adminDashboard:"/URM_PHP_APP/routes/api/adminDashboard",
+    
+        adminDashboardHeader:"/URM_PHP_APP/routes/api/adminDashboardHeader",
+    
+        academic:"/URM_PHP_APP/routes/api/academic",
+    
+        admin:"/URM_PHP_APP/routes/api/admin",
+    
+        urm:"/URM_PHP_APP/routes/api/urm",
+    
+        dei:"/URM_PHP_APP/routes/api/dei",
+        forgetPassword:"/URM_PHP_APP/routes/api/forgetPassword",
+        adminContact:"/URM_PHP_APP/routes/api/adminContact" }*/
+    
+
+    
+    
+
+
+

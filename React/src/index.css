@@ -681,6 +681,33 @@ h3{
 }
 
 
+.Repo {
+  padding-left: 80px;
+  padding-right: 60px;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  
+}
+
+.pvalid{
+  color: red;
+}
+
+.Deirepo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 425px; 
+}
+
+.linechart {
+  margin: 0 auto;
+}
+
+
+
 
 @media screen and (max-width: 767px) {
   .footdash {

@@ -1,82 +1,131 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link, Navigate } from 'react-router-dom'
-import { AppUrl, academiaPersonalInfo } from '../../Constants'
 import { withRouter } from '../../withRouter';
+import { useParams } from 'react-router-dom';
+import AcademicService from '../../Services/AcademicService';
+import { role } from "../../Constants";
 
 
-class Profileacademia extends Component {
-    constructor(props) {
-      super(props)
+function Profileacademia(){
     
-      this.state = {
-         institution_name:academiaPersonalInfo.institution_name,
-         email:academiaPersonalInfo.email,
-         desc:academiaPersonalInfo.desc,
-         research_focus_area:academiaPersonalInfo.research_focus_area,
-         position:academiaPersonalInfo.positions_offered
-      }
-    }
-
-    profileSubmitClick=(e)=>{
-        e.preventDefault();
-        const {institution_name,email,desc,research_focus_area,position} =this.state;
-        academiaPersonalInfo.institution_name = institution_name;
-        academiaPersonalInfo.email=email;
-        academiaPersonalInfo.desc=desc;
-        academiaPersonalInfo.research_focus_area=research_focus_area;
-        academiaPersonalInfo.positions_offered=position;
-
-        this.props.navigate('/Academiadashboard');
-        alert("Profile updated successfully.");
-    }
+    const { id } = useParams();
+    const [userDetails, setUserDetails] = useState({
+        institution_name:"",
+        email:"",
+        research_focus_area:"",
+        position:"",
+        desc:"",
+        password:"",
+    });
     
-    render() {
-        const {institution_name,email,desc,research_focus_area,position} =this.state;
+    useEffect(() => {
+        // Fetch the job details and update the state using the AdminService
+        AcademicService.updateAcademiaProfile(id)
+                .then((response) => {
+                    console.log(response);
+                    const userData = response.data.phpresult[0];
+                    setUserDetails({
+                        institution_name:userData.Aname,
+                        email:userData.EMAIL,
+                        password:userData.PASSWORD,
+                        research_focus_area: userData.Research_focus,
+                        position: userData.Positions,
+                        desc: userData.A_Desc
+                    
+                    });
+                    console.log("userDetails", userDetails);
+                })
+                .catch((error) => {
+                    alert("error " + error);
+                });
+        }, [id]); 
+
+        const handleChange = (event) => {
+            const { name, value } = event.target;
+            setUserDetails((prevProfileDetails) => ({
+                ...prevProfileDetails,
+                [name]: value,
+            }));
+        };
+        const  handleSubmit=(e)=>{
+            e.preventDefault();
+            const {  institution_name, email, research_focus_area, position,desc,password } = userDetails;
+            console.log(userDetails);
+            
+            
+            const respData = {
+                "institution_name":institution_name,
+                "email":email,
+                "research_focus_area":research_focus_area,
+                "position":position,
+                "desc": desc,     
+                "password":password,                    
+                "role": role.AcademiaProfilechange,
+                 "id":id
+            };
+    
+            AcademicService.changedetailsofAcademiaProfile(respData)
+                .then((response)=>{
+                    console.log(response);
+                    alert(response.data);
+                    
+                }).catch((error) => {
+                    alert("error " + error);
+                });  
+    
+        }
+    
         return (
             <div>
                 <h1 className="dashhead">Academia Dashboard</h1>
 
                 <div className="container">
                     <section className="card">
-                        <form onSubmit={this.profileSubmitClick}> <br />
+                        <form onSubmit={handleSubmit}> <br />
                             <h2> Academia Profile</h2>
                             <table className="form-group">
                                 <tbody>
                                     <tr>
-                                        <th><label htmlFor="aname"><b>Institution Name</b></label></th>
-                                        <td> <input type="text" name="" id="aname" value={institution_name} 
-                                        onChange={e=> this.setState({institution_name:e.target.value})}/></td>
+                                        <th><label htmlFor="institution_name"><b>Institution Name</b></label></th>
+                                        <td> <input type="text" name="institution_name" id="institution_name" value={userDetails.institution_name} 
+                                        onChange={handleChange}/></td>
                                     </tr>
                                     <tr>
-                                        <th><label htmlFor="adesc"><b>Description</b></label></th>
+                                        <th><label htmlFor="desc"><b>Description</b></label></th>
                                         <td>
-                                            <textarea rows="4" cols="57" id="adesc"
+                                            <textarea rows="4" cols="57" id="desc" name="desc"
                                                 placeholder="Enter your institution description"
-                                                onChange={e=> this.setState({desc:e.target.value})}
-                                                value={desc}>                                                    
+                                                onChange={handleChange}
+                                                value={userDetails.desc}>                                                    
                                             </textarea>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th><label htmlFor="reserachfocus"><b>Research Area</b></label></th>
-                                        <td><input type="text" name="" id="reserachfocus" placeholder="Enter research area"
-                                            value={research_focus_area} 
-                                            onChange={e=> this.setState({research_focus_area:e.target.value})}/>
+                                        <th><label htmlFor="research_focus_area"><b>Research Area</b></label></th>
+                                        <td><input type="text" name="research_focus_area" id="research_focus_area" placeholder="Enter research area"
+                                            value={userDetails.research_focus_area} 
+                                            onChange={handleChange}/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th><label htmlFor="postions"><b>Postions</b></label></th>
-                                        <td><input type="text" name="" id="postions" placeholder="Enter positions" 
-                                        value={position}
-                                        onChange={e=> this.setState({position:e.target.value})} />
+                                        <th><label htmlFor="position"><b>Postions</b></label></th>
+                                        <td><input type="text" name="position" id="position" placeholder="Enter positions" 
+                                        value={userDetails.position}
+                                        onChange={handleChange} />
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th><label htmlFor="username"><b>Email</b></label></th>
-                                        <td><input type="email" name="" id="username" placeholder="Enter email"
-                                            value={email} 
-                                            onChange={e=> this.setState({email:e.target.value})}/> </td>
+                                        <th><label htmlFor="email"><b>Email</b></label></th>
+                                        <td><input type="email" name="email" id="email" placeholder="Enter email"
+                                            value={userDetails.email} 
+                                            onChange={handleChange}/> </td>
+                                    </tr>
+                                    <tr>
+                                        <th><label htmlFor="password"><b>Password</b></label></th>
+                                        <td><input type="password" name="password" id="password" placeholder="Enter password"
+                                            value={userDetails.password} 
+                                            onChange={handleChange}/> </td>
                                     </tr>
                                     <tr>
                                         <td colSpan="2">
@@ -91,7 +140,7 @@ class Profileacademia extends Component {
 
                         </form> <br />
                         <div className="button-container">
-                            <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
+                            <Link to={`/Academiadashboard/${id}`} className="button">Back to Dashboard</Link>
                         </div>
                     </section>
 
@@ -100,6 +149,5 @@ class Profileacademia extends Component {
             </div>
         )
     }
-}
 
 export default withRouter(Profileacademia);

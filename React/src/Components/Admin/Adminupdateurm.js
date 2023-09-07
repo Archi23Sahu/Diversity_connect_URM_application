@@ -1,25 +1,90 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect} from 'react'
+import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import AdminSideMenu from './AdminSideMenu'
+import { useParams } from 'react-router-dom';
+import AdminService from '../../Services/AdminService';
+import { role } from '../../Constants';
 
-export default class Adminupdateurm extends Component {
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const uname = event.target.uname.value;
-        const phoneno = event.target.phoneno.value;
-        const nationality = event.target.nationality.value;
-        const location = event.target.location.value;
-        const ethnicity = event.target.ethnicity.value;
-        const education = event.target.education.value;
-        const resexp = event.target.resexp.value;
-        const publication = event.target.publication.value;
-        const positions = event.target.postions.value;
-        const email = event.target.username.value;
+export default function Adminupdateurm(){
+    const { id } = useParams();
+    const [urmDetails, setURMDetails] = useState({
+        
+            uname:"",
+            phoneno:"",
+            nationality:"",
+             location:"",  
+             ethinicity:"",
+             education:"",
+             resexp:"",
+             publication:"",
+             postions:"",
+    });
     
-        const message = `Name: ${uname}\nPhone Number: ${phoneno}\nNationality: ${nationality}\nLocation: ${location}\nEthnicity: ${ethnicity}\nEducation: ${education}\nResearch Experience: ${resexp}\n Publications: ${publication}\nPositions: ${positions}\nEmail: ${email}`;
-        alert(message);
-      };
-    render() {
+    useEffect(() => {
+        // Fetch the job details and update the state using the AdminService
+        AdminService.updateURM(id)
+            .then((response) => {
+                console.log(response);
+                const jobData = response.data.phpresult[0]; // Extract the object from the array
+                setURMDetails({
+                    uname: jobData.Uname,
+                    phoneno: jobData.Phone_no,
+                    nationality: jobData.Nationality,
+                    location: jobData.Location,
+                    ethinicity:jobData.Ethinicity,
+                    education:jobData.Education,
+                    resexp:jobData.Res_exp,
+                    publication:jobData.Publications,
+                    postions:jobData.Positions,
+                });
+                console.log("urmDetails", urmDetails);
+            })
+            .catch((error) => {
+                alert("error " + error);
+            });
+    }, [id]); 
+   
+   
+
+        const handleChange = (event) => {
+            const { name, value } = event.target;
+            setURMDetails((prevURMDetails) => ({
+                ...prevURMDetails,
+                [name]: value,
+            }));
+        };
+        
+    const  handleSubmit=(e)=>{
+        e.preventDefault();
+        const {  uname, phoneno, nationality, location,ethinicity,education,resexp,publication,postions} = urmDetails;
+        console.log(urmDetails);
+        
+        
+        const respData = {
+            "id":id,
+            "uname": uname,
+            "phoneno": phoneno,
+            "nationality": nationality,
+            "location": location, 
+            "ethinicity":ethinicity,
+             "education":education,
+             "resexp":resexp,
+             "publication":publication,
+             "postions":postions,
+             "role": role.URMchange,
+        };
+
+       AdminService.changedetailsofURM(respData)
+        .then((response)=>{
+            console.log(response);
+            alert(response.data);
+            
+        }).catch((error) => {
+            alert("error " + error);
+        });  
+
+    }
     return (
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
@@ -29,68 +94,59 @@ export default class Adminupdateurm extends Component {
 
     <div className="container">
         <section className="card">
-            <form onSubmit={this.handleSubmit}> <br/>
+            <form onSubmit={handleSubmit}> <br/>
             <h2> Update URM Candidate </h2>
                 <table className="form-group">
                     <tbody>
                     <tr>
                         <th><label htmlFor="uname"><b> Name</b></label></th>
-                        <td> <input type="text" name="uname" id="uname" placeholder="Enter your name" defaultValue="Rahul"/></td>
+                        <td> <input type="text" name="uname" id="uname" placeholder="Enter your name"value={urmDetails.uname} onChange={handleChange }/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="phoneno"><b>Phone number</b></label></th>
                         <td>
                             <input type="text" name="phoneno" id="phoneno" placeholder="Enter your phone number"
-                                defaultValue="2144568745"/>
+                                value={urmDetails.phoneno} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="nationality"><b>Nationality</b></label></th>
                         <td><input type="text" name="nationality" id="nationality" placeholder="Enter nationality"
-                                defaultValue="Indian"/>
+                                 value={urmDetails.nationality} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="location"><b>Location</b></label></th>
-                        <td><input type="text" name="location" id="location" placeholder="Enter location" defaultValue="Dallas"/>
+                        <td><input type="text" name="location" id="location" placeholder="Enter location"  value={urmDetails.location} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
-                        <th><label htmlFor="ethnicity"><b>Ethnicity</b></label></th>
-                        <td><input type="text" name="ethnicity" id="ethnicity" placeholder="Enter ethnicity" defaultValue="Asian"/>
+                        <th><label htmlFor="ethinicity"><b>Ethnicity</b></label></th>
+                        <td><input type="text" name="ethinicity" id="ethinicity" placeholder="Enter ethinicity"  value={urmDetails.ethinicity} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="education"><b>Education</b></label></th>
-                        <td><input type="text" name="education" id="education" placeholder="Enter education" defaultValue="Masters"/>
+                        <td><input type="text" name="education" id="education" placeholder="Enter education"  value={urmDetails.education} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="resexp"><b>Research Experience</b></label></th>
                         <td><input type="text" name="resexp" id="resexp" placeholder="Enter research experience"
-                                defaultValue="3"/>
+                                 value={urmDetails.resexp} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="publication"><b>Publications</b></label></th>
-                        <td><input type="text" name="publication" id="publication" placeholder="Enter publication" defaultValue="xyz"/>
+                        <td><input type="text" name="publication" id="publication" placeholder="Enter publication"  value={urmDetails.publication} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="postions"><b>Postions</b></label></th>
-                        <td><input type="text" name="postions" id="postions" placeholder="Enter positions" defaultValue="Post doc"/>
+                        <td><input type="text" name="postions" id="postions" placeholder="Enter positions"  value={urmDetails.postions} onChange={handleChange }/>
                         </td>
                     </tr>
-                    <tr>
-                        <th><label htmlFor="username"><b>Email</b></label></th>
-                        <td><input type="email" name="username" id="username" placeholder="Enter email"
-                                defaultValue="rahul@gmail.com"/> </td>
-                    </tr>
-                    <tr>
-                        <th><label htmlFor="password"><b>Password</b></label></th>
-                        <td><input type="text" name="password" id="password" placeholder="Enter Password"
-                                defaultValue="*******"/><br/></td>
-                    </tr>
+                                     
                     <tr>
                         <td colSpan="2">
                             <div className="button-container">
@@ -105,14 +161,10 @@ export default class Adminupdateurm extends Component {
 
             </form>
         </section>
-
-        <footer className="foot">
-            <p>&copy; Group 9-CSE5335. ALL Rights Reserved. Diversity Connect</p>
-        </footer>
+        <Footer/>
 
     </div>
       </div>
  
     )
   }
-}

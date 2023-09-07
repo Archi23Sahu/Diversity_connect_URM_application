@@ -1,11 +1,32 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import { AppUrl } from '../../Constants'
+import AcademicService from '../../Services/AcademicService';
+import { useParams } from 'react-router-dom';
+import { withRouter } from '../../withRouter';
 
+function Bookmarkedcandidates(){
+    const { id } = useParams();
 
-export default class Bookmarkedcandidates extends Component {
-    render() {
+    const [fetchflagcandidateDetails, setfetchflagcandidateDetails] = useState([]);
+      
+    
+        useEffect(() => {
+            // Fetch faculty details and update the state using the AcademicService
+                    AcademicService.getFlagCandidate(id)
+                .then((response)=>{
+                    console.log(response);
+                    setfetchflagcandidateDetails(response.data.phpresult);
+                }).catch((error) => {
+                    alert("error " + error);
+                });
+          }, []);
+
+     
+
+   
+      
         return (
             <div>
                 <h1 className="dashhead">Academia Dashboard</h1>
@@ -15,56 +36,28 @@ export default class Bookmarkedcandidates extends Component {
                         <table className="ftable">
                             <thead>
                                 <tr>
-                                    <th>School Name</th>
                                     <th>Student Id</th>
                                     <th>Name</th>
                                     <th>Nationality</th>
                                     <th>Ethnicity</th>
                                     <th>Research topic</th>
-                                    <th>Status</th>
+                                    <th>Education</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>UTA</td>
-                                    <td>1003</td>
-                                    <td>Elon</td>
-                                    <td>Indian</td>
-                                    <td>Asian</td>
-                                    <td>ML</td>
-                                    <td>Pending</td>
-                                </tr>
-                                <tr>
-                                    <td>UTD</td>
-                                    <td>1193</td>
-                                    <td>Musk</td>
-                                    <td>Fijian</td>
-                                    <td>Koreans</td>
-                                    <td>ML</td>
-                                    <td>Selected</td>
-                                </tr>
-                                <tr>
-                                    <td>NEU</td>
-                                    <td>2003</td>
-                                    <td>Hisoka</td>
-                                    <td>Algerian</td>
-                                    <td>Filipino</td>
-                                    <td>ML</td>
-                                    <td>Applied</td>
-                                </tr>
-                                <tr>
-                                    <td>SFU</td>
-                                    <td>1053</td>
-                                    <td>winso</td>
-                                    <td>Gambian</td>
-                                    <td>Irish</td>
-                                    <td>ML</td>
-                                    <td>Applied</td>
-                                </tr>
+                            {fetchflagcandidateDetails.map(
+                                        (rs) => <tr key={rs.UID}>
+                                            <td >{rs.UID}</td>
+                                            <td>{rs.Uname}</td>
+                                            <td>{rs.Nationality}</td>
+                                            <td>{rs.Ethinicity}</td>
+                                            <td>{rs.Res_exp}</td>
+                                            <td>{rs.Education}</td>
+                                        </tr>)}
                             </tbody>
                         </table>
                         <div className="button-container">
-                            <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
+                            <Link to={`/Academiadashboard/${id}`} className="button">Back to Dashboard</Link>
                         </div>
                     </section>
 
@@ -73,4 +66,4 @@ export default class Bookmarkedcandidates extends Component {
             </div>
         )
     }
-}
+ export default withRouter(Bookmarkedcandidates);

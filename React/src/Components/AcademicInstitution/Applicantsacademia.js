@@ -1,14 +1,62 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
-import { AppUrl } from '../../Constants';
+import AcademicService from '../../Services/AcademicService';
+import { useParams } from 'react-router-dom';
+import { withRouter } from '../../withRouter';
+import { role } from '../../Constants'
 
 
-export default class Applicantsacademia extends Component {
-  handleBookmark = (candidateName) => {
-		alert(`You saved ${candidateName} for future reference.`);
+function Applicantsacademia(){  
+  const { id,jid } = useParams();
+
+  
+  const [applicantsDetails, setapplicantsDetails] = useState([]);
+      
+  useEffect(() => {
+    // Fetch faculty details and update the state using the AcademicService
+    AcademicService.getApplicants(jid)
+      .then((response) => {
+        console.log(response); // Check the structure of the response
+        setapplicantsDetails(response.data.phpresult);
+        /*const applicantsData = response.data.phpresult[0];
+        const myArray = Object.entries(applicantsData);
+      
+        console.log("applicantsData",applicantsData);
+                    if (myArray) {
+                      setapplicantsDetails(myArray);
+                        console.log("userDetails inside useEffect", myArray); 
+                    } else {
+                        // Handle the case where the array is empty or undefined
+                        console.error("Profile data not found");
+                    }*/
+         
+          
+        
+      }).catch((error) => {
+        alert("error " + error);
+      });
+  }, []);
+
+
+
+
+   const handleBookmark = (uid,id) => {
+		//
+            const resdata = {                    
+              "role": role.Academiabookmark,
+                "uid": uid,
+                "id":id
+          };
+          AcademicService.academiaBookmark(resdata)
+          .then((response)=>{
+              console.log(response);
+              alert(`You saved candidate ${uid} for future reference.`);
+          }).catch((error) => {
+              alert("error " + error);
+          });
 	  };	
-  render() {
+ 
     return (
       <div>
         <h1 className="dashhead">Academia Dashboard</h1>
@@ -20,59 +68,32 @@ export default class Applicantsacademia extends Component {
                   <th>Job Id</th>
                   <th>Application Id</th>
                   <th>Status</th>
-                  <th>Student Id</th>
+                  <th>Candidate Id</th>
                   <th>Flag</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1000</td>
-                  <td>4590</td>
-                  <td>Applied</td>
-                  <td>5550</td>
-                  <td>
-                    <div className="">
-                      <button className="button" onClick={() => this.handleBookmark('4590')}>   Bookmark   </button>  
+              {applicantsDetails.map((rs) => (
+              <tr key={rs.App_Id}>
+                <td>{rs.JID}</td>
+                <td>{rs.App_Id}</td>
+                <td>{rs.STATUS}</td>
+                <td>{rs.UID}</td>
+                <td>
+                  <div className="">
+                  <div className="">
+                    <button className="button" onClick={()=>handleBookmark(rs.UID,id)}>Bookmark</button>  
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1000</td>
-                  <td>4591</td>
-                  <td>Pending</td>
-                  <td>1550</td>
-                  <td>
-                    <div className="">
-                    <button className="button" onClick={() => this.handleBookmark('4591')}>   Bookmark   </button>  
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1000</td>
-                  <td>4596</td>
-                  <td>Pending</td>
-                  <td>2650</td>
-                  <td>
-                    <div className="">
-                    <button className="button" onClick={() => this.handleBookmark('4596')}>   Bookmark   </button>  
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1000</td>
-                  <td>3590</td>
-                  <td>Selected</td>
-                  <td>1200</td>
-                  <td>
-                    <div className="">
-                    <button className="button" onClick={() => this.handleBookmark('3590')}>Bookmark</button>  
-                    </div>
-                  </td>
-                </tr>
+                  </div>
+                </td>
+              </tr>
+            ))
+          }
+                
               </tbody>
             </table>
             <div className="button-container">
-             <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
+             <Link to={`/Academiadashboard/${id}`} className="button">Back to Dashboard</Link>
             </div>
           </section>
 
@@ -81,4 +102,4 @@ export default class Applicantsacademia extends Component {
       </div>
     );
   }
-}
+  export default withRouter(Applicantsacademia)

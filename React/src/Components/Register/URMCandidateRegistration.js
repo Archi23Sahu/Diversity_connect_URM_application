@@ -1,26 +1,93 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
+import { role } from '../../Constants'
+import RegisterService from '../../Services/RegisterService'
+
+
 
 export default class URMCandidateRegistration extends Component {
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const uname = event.target.uname.value;
-        const phoneno = event.target.phoneno.value;
-        const nationality = event.target.nationality.value;
-        const location = event.target.location.value;
-        const ethnicity = event.target.ethnicity.value;
-        const education = event.target.education.value;
-        const resexp = event.target.resexp.value;
-        const publication = event.target.publication.value;
-        const positions = event.target.postions.value;
-        const resume = event.target.resume.value;
-        const coverletter = event.target.coverletter.value;
-        const email = event.target.username.value;
+    constructor(props) {
+      super(props)
     
-        const message = `Name: ${uname}\nPhone Number: ${phoneno}\nNationality: ${nationality}\nLocation: ${location}\nEthnicity: ${ethnicity}\nEducation: ${education}\nResearch Experience: ${resexp}\nPublications: ${publication}\nPositions: ${positions}\nResume: ${resume}\nCover Letter: ${coverletter}\nEmail: ${email}`;
-        alert(message);
-        event.target.reset();
+      this.state = {
+       uname:"",  
+       phoneno:"",
+       nationality:"",
+       location:"",
+       ethnicity:"",
+       education:"",
+       resexp:"",
+       publication:"",
+       postions:"",
+       resume:null,
+       coverletter:null,
+       username:"",
+       password:"",
+       role:role.Candidate
+      }
+    }
+    isPhoneNumberValid = (number) => {
+        const phoneNumberRegex = /^\d{10}$/; 
+       
+        return phoneNumberRegex.test(number);
       };
+    
+      isPasswordValid = (password) => {
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return passwordPattern.test(password);
+      };
+
+    handleInputChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    handleFileChange = (event) => {
+        this.setState({
+          [event.target.name]: event.target.files[0],
+        });
+      };
+
+    registerBtnClick=(e)=>{
+        e.preventDefault();
+        if (!this.isPhoneNumberValid(this.state.phoneno)) {
+            alert( "Please enter a valid 10-digit phone number");        
+            return;
+        }
+        if (!this.isPasswordValid(this.state.password)) {
+            alert( "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character." );
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append('uname', this.state.uname);
+        formData.append('name', this.state.uname);
+        formData.append('phoneno', this.state.phoneno);
+        formData.append('nationality', this.state.nationality);
+        formData.append('location', this.state.location);
+        formData.append('ethnicity', this.state.ethnicity);
+        formData.append('education', this.state.education);
+        formData.append('resexp', this.state.resexp);
+        formData.append('publication', this.state.publication);
+        formData.append('postions', this.state.postions);
+        formData.append('resume', this.state.resume);
+        formData.append('coverletter', this.state.coverletter);
+        formData.append('email', this.state.username);
+        formData.append('password', this.state.password);
+        formData.append('role', role.Candidate);
+        
+        RegisterService.registerURM(formData)
+        .then((respose)=>{
+            console.log(respose);
+            alert(respose.data);
+        }).catch((error) => {
+            alert("error " + error);
+        });
+    }
+
+
+
     render() {
         return (
             <div>
@@ -28,84 +95,114 @@ export default class URMCandidateRegistration extends Component {
                     <header className="header">
                     </header>
                     <section className="card">
-                        <form onSubmit={this.handleSubmit}> <br />
-                        <h2> URM Candidate Registration Form</h2>
+                        <form onSubmit={this.registerBtnClick}> <br />
+
                             <table className="form-group">
-                            <tbody>
-                                
+                                <tr>
+                                    <h2> URM Candidate Registration Form</h2>
+                                    <tr>
                                         <tr>
                                             <th><label htmlFor="uname"><b> Name</b></label></th>
-                                            <td> <input type="text" name="" id="uname" placeholder="Enter your name" required /></td>
+                                            <td> <input type="text" name="uname" id="uname" placeholder="Enter your name" required 
+                                            value={this.state.uname}
+                                            onChange={this.handleInputChange}/></td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="phoneno"><b>Phone number</b></label></th>
                                             <td>
-                                                <input type="text" name="" id="phoneno" placeholder="Enter your phone number" required />
+                                                <input type="text" name="phoneno" id="phoneno" placeholder="Enter your phone number" required 
+                                                value={this.state.phoneno}
+                                                onChange={this.handleInputChange}/><br/>
                                             </td>
                                         </tr>
+                                     
                                         <tr>
                                             <th><label htmlFor="nationality"><b>Nationality</b></label></th>
-                                            <td><input type="text" name="" id="nationality" placeholder="Enter nationality" />
+                                            <td><input type="text" name="nationality" id="nationality" placeholder="Enter nationality"
+                                            value={this.state.nationality}
+                                            onChange={this.handleInputChange} />
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="location"><b>Location</b></label></th>
-                                            <td><input type="text" name="" id="location" placeholder="Enter location" />
+                                            <td><input type="text" name="location" id="location" placeholder="Enter location" 
+                                            value={this.state.location}
+                                            onChange={this.handleInputChange}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="ethnicity"><b>Ethnicity</b></label></th>
-                                            <td><input type="text" name="" id="ethnicity" placeholder="Enter ethnicity" />
+                                            <td><input type="text" name="ethnicity" id="ethnicity" placeholder="Enter ethnicity" 
+                                            value={this.state.ethnicity}
+                                            onChange={this.handleInputChange}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="education"><b>Education</b></label></th>
-                                            <td><input type="text" name="" id="education" placeholder="Enter education" />
+                                            <td><input type="text" name="education" id="education" placeholder="Enter education" 
+                                            value={this.state.education}
+                                            onChange={this.handleInputChange}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="resexp"><b>Research Experience</b></label></th>
-                                            <td><input type="text" name="" id="resexp" placeholder="Enter research experience" />
+                                            <td><input type="text" name="resexp" id="resexp" placeholder="Enter research experience" 
+                                            value={this.state.resexp}
+                                            onChange={this.handleInputChange}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="publication"><b>Publications</b></label></th>
-                                            <td><input type="text" name="" id="publication" placeholder="Enter publication" />
+                                            <td><input type="text" name="publication" id="publication" placeholder="Enter publication" 
+                                            value={this.state.publication}
+                                            onChange={this.handleInputChange}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="postions"><b>Postions</b></label></th>
-                                            <td><input type="text" name="" id="postions" placeholder="Enter positions" /> </td>
+                                            <td><input type="text" name="postions" id="postions" placeholder="Enter positions" 
+                                            value={this.state.postions}
+                                            onChange={this.handleInputChange}/> </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="resume"><b>Resume</b></label></th>
-                                            <td><input type="file" id="resume" name="resume" />
+                                            <td><input type="file" id="resume" name="resume" 
+                                            // value={this.state.resume}
+                                            onChange={this.handleFileChange} required/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="coverletter"><b>Cover Letter</b></label></th>
-                                            <td><input type="file" id="coverletter" name="coverletter" />
+                                            <td><input type="file" id="coverletter" name="coverletter" 
+                                            // value={this.state.coverletter}
+                                            onChange={this.handleFileChange} required/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="username"><b>Email</b></label></th>
-                                            <td><input type="email" name="" id="username" placeholder="Enter email" required /> </td>
+                                            <td><input type="email" name="username" id="username" placeholder="Enter email" required 
+                                            value={this.state.username}
+                                            onChange={this.handleInputChange}/> </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="password"><b>Password</b></label></th>
-                                            <td><input type="text" name="" id="password" placeholder="Enter Password" required /><br /></td>
+                                            <td><input type="password" name="password" id="password" placeholder="Enter Password" required 
+                                            value={this.state.password}
+                                            onChange={this.handleInputChange}
+                                            /><br />
+                                              
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td colSpan="2">
+                                            <td colspan="2">
                                                 <div className="form-group">
 
                                                     <input type="submit" value="SignUp" />
                                                 </div><br />
                                             </td>
                                         </tr>
-                                   
-                                
-                                </tbody>
+                                    </tr>
+                                </tr>
                             </table>
 
                         </form>

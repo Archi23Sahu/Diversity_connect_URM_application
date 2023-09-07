@@ -46,7 +46,7 @@ export default class Recruiterdashboard extends Component {
                     <h3>Job Title 1</h3>
                     <div className="noinfo">
                         <label>No of candidates applied:</label>
-                        <input type="text" defaultValue="140" readOnly/>
+                        <input type="text" defaultValue="14" readOnly/>
                     </div>
                     <a href=""><button className="dashbutton" onClick={() => this.handleDelete('job1')}>Delete</button></a>
                     <Link to={AppUrl.Applicantrecruiter} className="dashbutton"> See Applicants</Link>

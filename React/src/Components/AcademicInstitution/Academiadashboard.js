@@ -1,60 +1,134 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import { academiaPersonalInfo,academiaFacultyDetails, AppUrl } from '../../Constants'
+import AcademicService from '../../Services/AcademicService';
+import { useParams } from 'react-router-dom';
 
+export default function Academiadashboard(){
+   
+  
+    const [jobcountDetails, setJobcountDetails] = useState([]);
+       
+    const [facultyDetails, setFacultyDetails] = useState([]);
+    const [jobDetails, setJobDetails] = useState([]);
+        const { id } = useParams();
+        const [userDetails, setUserDetails] = useState({
+            institution_name:"",
+            email:"",
+            research_focus_area:"",
+            position:"",
+        });
+        useEffect(() => {
+            // Fetch the job details and update the state using the AdminService
+            AcademicService.getProfileDatails(id)
+                .then((response) => {
+                    console.log(response);
+                    const userData = response.data.phpresult[0]; // Extract the object from the array
+                    if (userData) {
+                        setUserDetails({
+                            institution_name: userData.Aname,
+                            email: userData.EMAIL,
+                            research_focus_area: userData.Research_focus,
+                            position: userData.Positions,
+                        });
+                        console.log("userDetails inside useEffect", userDetails); 
+                    } else {
+                        // Handle the case where the array is empty or undefined
+                        console.error("Profile data not found");
+                    }
+                    console.log("userDetails", userDetails);
+                })
+                .catch((error) => {
+                    alert("error " + error);
+                });
+        }, [id]);
+  
+            useEffect(() => {
+                // Fetch faculty details and update the state using the AcademicService
+                AcademicService.getfaculty(id)
+                  .then((response) => {
+                    console.log(response);
+                    setFacultyDetails(response.data.phpresult);
+                  })
+                  .catch((error) => {
+                    alert("error " + error);
+                  });
+              }, []);
+      
+              useEffect(() => {
+                // Fetch faculty details and update the state using the AcademicService
+                AcademicService.academiafetchJobs(id)
+                    .then((response)=>{
+                        console.log(response);
+                        setJobDetails(response.data.phpresult);
+                    }).catch((error) => {
+                        alert("error " + error);
+                    });
+              }, []);
 
-export default class Academiadashboard extends Component {
-    constructor(props) {
-      super(props)
-    
-      this.state = {
-        institution_name:academiaPersonalInfo.institution_name,
-         email:academiaPersonalInfo.email,
-         desc:academiaPersonalInfo.desc,
-         research_focus_area:academiaPersonalInfo.research_focus_area,
-         position:academiaPersonalInfo.positions_offered,
+              
+      useEffect(() => {
+        
+        AcademicService.AcademiafetchCountOfAppliedJob(id)
+            .then((response)=>{
+                console.log("AcademiafetchCountOfAppliedJob",response);
+                setJobcountDetails(response.data.phpresult);
+            }).catch((error) => {
+                alert("error " + error);
+            });
+      }, []);
+      
+                    
+            const JobPostItem = ({ rs }) => {
+                let count = 0;
 
-         facultyDetails : academiaFacultyDetails
-      }
-    }
-    
-    
-    render() {
-        const {institution_name,email,desc,research_focus_area,position,facultyDetails} =this.state;
-        const facultyList = this.state.facultyDetails.map(faculty=> <tr key={faculty.id}>
-            <td>{faculty.id}</td>
-            <td>{faculty.name}</td>
-            <td>{faculty.subject}</td>
-            <td>{faculty.class}</td>
-            <td>{faculty.hours}</td>
-        </tr>)
+                for (let i = 0; i < jobcountDetails.length; i++) {
+                  if (jobcountDetails[i].JID === rs.JID) {
+                    count = parseInt(jobcountDetails[i].TotalApplicants, 10);
+                    break;
+                  }
+                }
+              
+                return (
+                <div>
+                    <h3>{rs.JOB_POSITIONS}</h3>
+                    <div className="noinfo">
+                    <label>No of candidates applied:</label>
+                    <input type="text"  value={count}  readOnly />
+                    </div>
+                    <Link to={`/Applicantsacademia/${id}/${rs.JID}`} className="button">See all Applicants</Link>
+                    <Link to={`/Academiajobview/${id}/${rs.JID}`} className="button">Details</Link>
+                </div>
+                );
+            };
+   
         return (
             <div>
                 <h1 className="dashhead">Academia Dashboard</h1>
                 <div className="content">
 
                     <div className="left-side">
-                        <Link to={AppUrl.Profileacademia} className="button">Edit Profile</Link>
-                        <Link to={AppUrl.Bookmarkedcandidates} className="button">Bookmarked Candidates</Link>
-                        <Link to={AppUrl.Viewurmcandidate} className="button">Search</Link>
+                        <Link to={`/Profileacademia/${id}`} className="button">Edit Profile</Link>
+                        <Link to={`/Bookmarkedcandidates/${id}`} className="button">Bookmarked Candidates</Link>
+                        <Link to={`/Viewurmcandidate/${id}`} className="button">Search</Link>
                         <h2>
                             <p>Personal Information</p>
                         </h2>
                         <div className="perinfo">
                             <label>Institution Name:</label>
-                            <input type="text" value={institution_name} readOnly />
+                            <input type="text"  value={userDetails.institution_name} readOnly />
                                 <label>Research focus area:</label>
-                                <input type="text" value={research_focus_area} readOnly />
+                                <input type="text" value={userDetails.research_focus_area} readOnly />
                                     <label>Email:</label>
-                                    <input type="text" value={email} readOnly />
+                                    <input type="text" value={userDetails.email} readOnly />
                                         <label>Positions Offered:</label>
-                                        <input type="text" value={position} readOnly />
+                                        <input type="text" value={userDetails.position} readOnly />
                                         </div>
                                         <br />
                                             <div className="Facultysec">
                                                 <h2>Faculty</h2>
-                                                <Link to={AppUrl.Addfaculty} className="button">Add Faculty</Link>
+                                                <Link to={`/Addfaculty/${id}`} className="button">Add Faculty</Link>
                                             </div>
                                             <table className="ftable">
                                                 <thead>
@@ -67,67 +141,40 @@ export default class Academiadashboard extends Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {facultyList}
+                                                {facultyDetails.map((rs) => (
+                                                            <tr key={rs.FID}>
+                                                                <td>{rs.FID}</td>
+                                                                <td>{rs.FNAME}</td>
+                                                                <td>{rs.FSUBJECT}</td>
+                                                                <td>{rs.CLASS}</td>
+                                                                <td>{rs.HOURS}</td>
+                                                            </tr>
+                                                        ))
+                                                   }
                                                 </tbody>
 
                                             </table>
                                         </div>
                                         <div className="right-side">
-                                            <Link to={AppUrl.Jobposts} className="button">Post Jobs</Link>
+                                            <Link to={`/Jobposts/${id}`} className="button">Post Jobs</Link>
+                                            
                                             <div className="joblist">
                                                 <div className="job-posting">
-                                                    <h3>Job Title 1</h3>
-                                                    <div className="noinfo">
-                                                        <label>No of candidates applied:</label>
-                                                        <input type="text" defaultValue="140" readOnly />
-                                                    </div>
-                                                    <Link to={AppUrl.Applicantsacademia} className="button">See all Applicants</Link>
-                                                    <Link to={AppUrl.Academiajobview} className="button">Details</Link>
-                                                </div>
-                                                <div className="job-posting">
-                                                    <h3>Job Title 2</h3>
-                                                    <div className="noinfo">
-                                                        <label>No of candidates applied:</label>
-                                                        <input type="text" defaultValue="90" readOnly />
-                                                    </div>
-                                                    <Link to={AppUrl.Applicantsacademia} className="button">See all Applicants</Link>
-                                                    <Link to={AppUrl.Academiajobview} className="button">Details</Link>
-                                                </div>
-                                                <div className="job-posting">
-                                                    <h3>Job Title 3</h3>
-                                                    <div className="noinfo">
-                                                        <label>No of candidates applied:</label>
-                                                        <input type="text" defaultValue="100" readOnly />
-                                                    </div>
-                                                    <Link to={AppUrl.Applicantsacademia} className="button">See all Applicants</Link>
-                                                    <Link to={AppUrl.Academiajobview} className="button">Details</Link>
-                                                </div>
-                                                <div className="job-posting">
-                                                    <h3>Job Title 4</h3>
-                                                    <div className="noinfo">
-                                                        <label>No of candidates applied:</label>
-                                                        <input type="text" defaultValue="110" readOnly />
-                                                    </div>
-                                                    <Link to={AppUrl.Applicantsacademia} className="button">See all Applicants</Link>
-                                                    <Link to={AppUrl.Academiajobview} className="button">Details</Link>
-                                                </div>
-                                                <div className="job-posting">
-                                                    <h3>Job Title 5</h3>
-                                                    <div className="noinfo">
-                                                        <label>No of candidates applied:</label>
-                                                        <input type="text" defaultValue="140" readOnly />
-                                                    </div>
-                                                    <Link to={AppUrl.Applicantsacademia} className="button">See all Applicants</Link>
-                                                    <Link to={AppUrl.Academiajobview} className="button">Details</Link>
-                                                </div>
+                                                    
+                                                {jobDetails.map((rs) => (
+                                                    <JobPostItem key={rs.JID} rs={rs} /> // Use the new component and pass the data as props
+                                                    ))} 
                                             </div>
                                         </div>
                                     </div>
                                     <div className="chatbutton chatbutton button">
-                                        <Link to={AppUrl.Chatacademia} >Chat</Link>
+                                    <a href='http://127.0.0.1:8080/?name=Academia'>Chat</a>
                                     </div>
-                                    <Footer />
+                                   
+                                </div>
+                                <Footer />
                                 </div>
                                 )
-  }
+                               
+  
 }

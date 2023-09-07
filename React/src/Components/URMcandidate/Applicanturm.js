@@ -1,10 +1,26 @@
-import React, { Component } from 'react'
+import React, { useState,useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import { AppUrl } from '../../Constants'
+import URMService from '../../Services/URMService';
+import { useParams } from 'react-router-dom';
+import { role } from '../../Constants';
 
-export default class Applicanturm extends Component {
-  render() {
+export default function Applicanturm(){
+	
+    const [jobDetails, setJobDetails] = useState([]);
+        const { id, jid } = useParams();
+
+		useEffect(() => {
+			URMService.getApplicationStatus(id, jid)
+			.then((response) => {
+			  console.log(response);
+			  setJobDetails(response.data.phpresult);
+			})
+			.catch((error) => {
+			  alert("error " + error);
+			});
+		  }, []);
     return (
       <div>
         <h1 className="dashhead">URM Candidate Dashboard</h1>
@@ -19,22 +35,22 @@ export default class Applicanturm extends Component {
 							<th>Application Id</th>
 							<th>Status</th>
 							<th>Student Id</th>
-							<th>Date</th>
+							
 						</tr>
 					</thead>
-				<tbody>
-				<tr>
-					<td>1000</td>
-					<td>4590</td>
-					<td>Applied</td>
-					<td>1001</td>
-					<td>2023/01/01</td>
-				</tr>
+				<tbody> {jobDetails.map((rs) => (
+                <tr key={rs.App_Id}>
+                  <td>{rs.JID}</td>
+                  <td>{rs.App_Id}</td>
+                  <td>{rs.STATUS}</td>
+                  <td>{rs.UID}</td>
+                </tr>
+              ))}
 				</tbody>
 
 			</table>
 			<div className="button-container">
-            <Link to={AppUrl.Urmdashboard} className="button">Back to Dashboard</Link>
+            <Link to={`/Urmdashboard/${id}`} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 
@@ -44,4 +60,4 @@ export default class Applicanturm extends Component {
       </div>
     )
   }
-}
+

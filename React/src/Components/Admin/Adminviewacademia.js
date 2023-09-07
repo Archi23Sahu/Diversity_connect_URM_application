@@ -2,14 +2,49 @@ import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import AdminSideMenu from './AdminSideMenu'
-import { AppUrl } from '../../Constants'
-
+import { role, AppUrl } from '../../Constants'
+import AdminService from '../../Services/AdminService';
 
 export default class Adminviewacademia extends Component {
-    handleDelete = (position) => {
-		alert(`You deleted  ${position} position.`);
-	  };
+   
+    constructor(props) {
+        super(props);
+        this.state = {
+            academiaDetails: []
+        };
+    }
+    componentDidMount() {
+        
+        this.showAcademia();
+      }
+      showAcademia(){
+        AdminService.fetchAcademia()
+        .then((response)=>{
+            console.log(response);
+           this.setState({ academiaDetails: response.data.phpresult});
+        }).catch((error) => {
+            alert("error " + error);
+        });
+    }
+
+    
+    handleDeleteAcademia=(aid)=>{
+        alert(`You deleted  ${aid} position.`);
+        const resdata = {                    
+            "role": role.Deleteacademia,
+              "aid": aid
+        };
+        AdminService.deleteAcademia(resdata)
+        .then((response)=>{
+            console.log(response);
+            //window.location.reload();	
+        }).catch((error) => {
+            alert("error " + error);
+        });
+
+    }
     render() {
+        const { academiaDetails } = this.state;
     return (
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
@@ -22,6 +57,7 @@ export default class Adminviewacademia extends Component {
             <table className="ftable">
                     <thead>
                         <tr>
+                        <th>Institution ID</th>
                             <th>Institution</th>
                             <th>Description</th>
                             <th>Research Area</th>
@@ -31,52 +67,29 @@ export default class Adminviewacademia extends Component {
                         </tr>
                     </thead>
                 <tbody>
-                <tr>
-                    <td> UTA </td>
-                    <td> Founded in 1895, The University of Texas at Arlington is a Carnegie Research 1 institution
-                        with more than 100 years of academic excellence and tradition. </td>
-                    <td> Computer Science, Electrical </td>
-                    <td>Post doc </td>
-                    <td>
-                        <div className="button-container"> <button className="button" onClick={() => this.handleDelete('UTA')}>   Delete   </button>   </div>
-                    </td>
-                    <td>
-                        <div className="button-container"> 
-                        <Link to={AppUrl.Adminupdateacademia} className="button">Update</Link>
-                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td> UTD </td>
-                    <td> Founded in 1895, The University of Texas at Arlington is a Carnegie Research 1 institution
-                        with more than 100 years of academic excellence and tradition. </td>
-                    <td> Computer Science, Electrical </td>
-                    <td>Phd </td>
-                    <td>
-                        <div className="button-container"> <button className="button" onClick={() => this.handleDelete('UTD')}>   Delete   </button>   </div>
-                    </td>
-                    <td>
-                        <div className="button-container"> 
-                        <Link to={AppUrl.Adminupdateacademia} className="button">Update</Link>
-                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td> ASU </td>
-                    <td> Founded in 1895, The University of Texas at Arlington is a Carnegie Research 1 institution
-                        with more than 100 years of academic excellence and tradition. </td>
-                    <td> Computer Science, Electrical </td>
-                    <td>Faculty </td>
-                    <td>
-                        <div className="button-container"> <button className="button" onClick={() => this.handleDelete('ASU')}>   Delete   </button>   </div>
-                    </td>
-                    <td>
-                        <div className="button-container"> 
-                        <Link to={AppUrl.Adminupdateacademia} className="button">Update</Link>
-                         </div>
+                {academiaDetails.map((rs)=>
+                                            <tr key={rs.AId}>
+                                                <td>{rs.AId}</td>
+                                                <td>{rs.Aname}</td>
+                                                <td>{rs.A_Desc}</td>
+                                                <td>{rs.Research_focus}</td>
+                                                <td>{rs.Positions}</td>
+                                               
+                                                <td>
+                                                    <div className="">
+                                                        <a className="button" onClick={()=>this.handleDeleteAcademia(rs.AId)}>
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="">
+                                                    <Link to={`/Adminupdateacademia/${rs.AId}`} className="button">Update</Link>
 
-                    </td>
-                </tr>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
 
                 </tbody>
             </table>

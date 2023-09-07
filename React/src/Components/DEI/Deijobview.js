@@ -1,50 +1,107 @@
-import React, { Component } from 'react'
+import React, { useState,useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
-import { AppUrl } from '../../Constants'
+import { withRouter } from '../../withRouter';
+import AcademicService from '../../Services/AcademicService';
+import { useParams } from 'react-router-dom';
+import { role } from '../../Constants';
 
-export default class Deijobview extends Component {
-	handleSubmit = (event) => {
-		event.preventDefault();
-		const position = event.target.jobposition.value;
-		const description = event.target.jdesc.value;
-		const date = event.target.date.value;
-		const location = event.target.location.value;
-		const message = `Position: ${position}\nDescription: ${description}\nDate: ${date}\nLocation: ${location}`;
-		alert(message);
-	
-	  };
-  render() {
+export default function Deijobview(){
+	const { id,jid } = useParams();
+    const [jobDetails, setJobDetails] = useState({
+      jobposition:"",
+      jdesc:"",
+      date:"",
+      location:"",
+  });
+      useEffect(() => {
+        // Fetch the job details and update the state using the AdminService
+        AcademicService.academiaupdateJobs(jid)
+            .then((response) => {
+                console.log(response);
+                const jobData = response.data.phpresult[0]; // Extract the object from the array
+                setJobDetails({
+                    jobposition: jobData.JOB_POSITIONS,
+                    jdesc: jobData.J_DESC,
+                    date: jobData.DATE,
+                    location: jobData.LOCATION,
+                });
+                console.log("jobDetails", jobDetails);
+            })
+            .catch((error) => {
+                alert("error " + error);
+            });
+    }, []); 
+
+    
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setJobDetails((prevJobDetails) => ({
+          ...prevJobDetails,
+          [name]: value,
+      }));
+  };
+
+    const  handleSubmit=(e)=>{
+      e.preventDefault();
+      const {  jobposition, jdesc, date, location } = jobDetails;
+      console.log(jobDetails);
+      
+      
+      const respData = {
+          "jobposition": jobposition,
+          "jdesc": jdesc,
+          "date": date,
+          "location": location,           
+          "role": role.AcademiaJobdetailsupdate,
+           "jid":jid
+      };
+
+      AcademicService.academicchangedetailsofJobs(respData)
+      .then((response)=>{
+          console.log(response);
+          alert(response.data);
+          
+      }).catch((error) => {
+          alert("error " + error);
+      });  
+
+  }
+ 
     return (
       <div>
         <h1 className="dashhead">DEI Officer Dashboard</h1>
 	<div className="container">
 		<section className="card">
         <h2> View Job Posting</h2>
-			<form onSubmit={this.handleSubmit}> <br/>
+			<form onSubmit={handleSubmit}> <br/>
 
 				<table className="form-group">
 					<tbody>
-					<tr>
-						<th><label htmlFor="jobposition"><b>Position</b></label></th>
-						<td> <input type="text" name="jobposition" id="jobposition" placeholder="Enter position" defaultValue="PhD"/></td>
-					</tr>
-					<tr>
-						<th><label htmlFor="jdesc"><b>Job Description</b></label></th>
-						<td>
-							<textarea rows="4" cols="57" id="jdesc" name="jdesc"
-								placeholder="Enter your institution description" defaultValue="A software developer with a focus on web application development and server-side, or database-side, programming is known as a back-end developer. The code that the website visitor cannot see is handled by back-end developers, but they are also in charge of making sure that the front end, or what the visitor sees and interacts with, is fully working as a whole."/>
-						</td>
-					</tr>
-					<tr>
-						<th><label htmlFor="date"><b>Date</b></label></th>
-						<td><input type="date" name="date" id="date" defaultValue="2020-01-01"/>
-						</td>
-					</tr>
-					<tr>
-						<th><label htmlFor="location"><b>Location</b></label></th>
-						<td><input type="text" name="location" id="location" placeholder="Enter location" defaultValue="USA"/> </td>
-					</tr>
+				    <tr>
+                  <th><label htmlFor="jobposition"><b>Position</b></label></th>
+                  <td>
+                    <input type="text" name="jobposition" id="jobposition" placeholder="Enter position" value={jobDetails.jobposition} onChange={handleChange }/>
+                  </td>
+                </tr>
+                <tr>
+                  <th><label htmlFor="jdesc"><b>Job Description</b></label></th>
+                  <td>
+                    <textarea rows="4" cols="57" id="jdesc" placeholder="Enter your institution description"
+                   value={jobDetails.jdesc} onChange={handleChange }/></td>
+                </tr>
+                <tr>
+                  <th><label htmlFor="date"><b>Date</b></label></th>
+                  <td>
+                    <input type="date" name="date" id="date" value={jobDetails.date} onChange={handleChange }/>
+                  </td>
+                </tr>
+                <tr>
+                  <th><label htmlFor="location"><b>Location</b></label></th>
+                  <td>
+                    <input type="text" name="location" id="location" placeholder="Enter location" value={jobDetails.location} onChange={handleChange }/>
+                  </td>
+                </tr>
                     <tr>
 					<td colSpan="2">
 						<div className="button-container">
@@ -58,7 +115,7 @@ export default class Deijobview extends Component {
 
 			</form> <br />
 			<div className="button-container">
-              <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
+              <Link to= {`/Deidashboard/${id}`} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 
@@ -68,4 +125,4 @@ export default class Deijobview extends Component {
       </div>
     )
   }
-}
+

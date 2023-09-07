@@ -1,16 +1,61 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import { AppUrl } from '../../Constants'
+import DEIService from '../../Services/DEIService';
+import { role,backendUrl } from '../../Constants';
+import { withRouter } from '../../withRouter';
 
-export default class Deiapprovepostjobs extends Component {
-	handleAccept = (candidateName) => {
-		alert(`Accepted job position ${candidateName}`);
-	  };	
-	  handleDecline = (candidateName) => {
-		alert(`Declined job position ${candidateName}`);
+export default function Deiapprovepostjobs (){
+
+	const { id } = useParams();
+	const [jobDetails, setJobDetails] = useState([]);
+
+	useEffect(() => {
+		// Fetch faculty details and update the state using the AcademicService
+		DEIService.fetchJobsDEI(id)
+				.then((response)=>{
+					console.log(response);
+					setJobDetails(response.data.phpresult);
+				}).catch((error) => {
+					alert("error " + error);
+				});
+	  }, []);
+
+	 const handleAccept=(jid)=>{
+			alert('You have accepted the job!');
+					const resdata = {                    
+						"role": role.acceptJobs,
+						"jid": jid,
+						"id": id
+					};
+					DEIService.AcceptJob(resdata)
+					.then((response)=>{
+						console.log(response);	
+						//window.location.reload();					
+					}).catch((error) => {
+						alert("error " + error);
+					});
+
 	  };
-	render() {
+	 	
+	  const handleDecline=(jid)=> {
+		alert(`Declined job position `);
+		const resdata = {                    
+			"role": role.declineJobs,
+			"jid": jid,
+			"id": id
+		};
+		DEIService.DeclineJob(resdata)
+		.then((response)=>{
+			console.log(response);		
+			//window.location.reload();						
+		}).catch((error) => {
+			alert("error " + error);
+		});
+	  };
+	
     return (
     <div>
         	<h1 className="dashhead">DEI Officer Dashboard</h1>
@@ -20,6 +65,7 @@ export default class Deiapprovepostjobs extends Component {
 			<table className="ftable">
 					<thead>
 						<tr>
+						<th>Job Id</th>
 							<th>Position</th>
 							<th>Job Description</th>
 							<th>Date</th>
@@ -29,58 +75,32 @@ export default class Deiapprovepostjobs extends Component {
 						</tr>
 					</thead>
                 <tbody>
-				<tr>
-					<td> PostDoc</td>
-					<td> Software </td>
-					<td> 07/16/2023</td>
-					<td> Dallas</td>
-					<td>
-						<div className="">
-							<button  className="button" onClick={() => this.handleAccept('PostDoc')}>Accept</button>	
-						</div>
-					</td>
-					<td>
-						<div className="">
-						    <button  className="button" onClick={() => this.handleDecline('PostDoc')}>Decline</button>	
-						</div>
-					</td>
-				</tr>
-                <tr>
-				<td> PhD</td>
-				<td> Software </td>
-				<td> 07/16/2023</td>
-				<td> Dallas</td>
-				<td>
-					<div className="">
-						<button  className="button" onClick={() => this.handleAccept('PhD')}>Accept</button>	
-					</div>
-				</td>
-				<td>
-					<div className="">
-						<button  className="button" onClick={() => this.handleDecline('PhD')}>Decline</button>	
-					</div>
-				</td>
-				</tr>
-				<tr>
-					<td> Faculty</td>
-					<td> Software </td>
-					<td> 07/16/2023</td>
-					<td> Dallas</td>
-					<td>
-						<div className="">
-							<button  className="button" onClick={() => this.handleAccept('Faculty')}>Accept</button>							
-						</div>
-					</td>
-					<td>
-						<div className="">
-						    <button  className="button" onClick={() => this.handleDecline('Faculty')}>Decline</button>	
-						</div>
-					</td>
-				</tr>
+				{jobDetails.map((rs) => (<tr key={rs.JID}>
+                                                <td>{rs.JID}</td>
+                                                <td>{rs.JOB_POSITIONS}</td>
+                                                <td>{rs.J_DESC}</td>
+                                                <td>{rs.DATE}</td>
+                                                <td>{rs.LOCATION}</td>                                                
+                                                
+																				
+													<td>
+														<div className="">
+															<button  className="button" onClick={() => handleAccept(rs.JID)}>Accept</button>	
+														</div>
+													</td>
+													<td>
+														<div className="">
+															<button  className="button" onClick={() => handleDecline(rs.JID)}>Decline</button>	
+														</div>
+													</td>
+										</tr>
+                   ) )}
+
+				
                 </tbody>
 			</table>
 			<div className="button-container">
-             <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
+             <Link to={`/Deidashboard/${id}`} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 
@@ -90,4 +110,4 @@ export default class Deiapprovepostjobs extends Component {
       </div>
     )
   }
-}
+

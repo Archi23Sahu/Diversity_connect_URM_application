@@ -50,7 +50,12 @@ export default class RecruiterRegistration extends Component {
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="password"><b>Password</b></label></th>
-                                            <td><input type="text" name="" id="password" placeholder="Enter Password" required /><br /></td>
+                                            <td><input type="text" name="" id="password" placeholder="Enter Password" required 
+                                             minLength={8}
+                                             pattern='/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/' 
+                                             title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, $, !, %, *, ?, &)."
+                                         
+                                             /><br /></td>
                                         </tr>
                                         <tr>
                                             <td colSpan="2">

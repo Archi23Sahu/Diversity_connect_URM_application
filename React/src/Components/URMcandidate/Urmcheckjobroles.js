@@ -1,13 +1,45 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import { AppUrl } from '../../Constants'
+import URMService from '../../Services/URMService';
+import { role,backendUrl } from '../../Constants';
+import { withRouter } from '../../withRouter';
 
-export default class Urmcheckjobroles extends Component {
-	handleApplyClick = () => {		
-		alert('You have successfully applied for the job!');
+export default function Urmcheckjobroles(){
+	const { id } = useParams();
+	const [jobDetails, setJobDetails] = useState([]);
+
+	useEffect(() => {
+		// Fetch faculty details and update the state using the AcademicService
+				URMService.fetchJobs(id)
+				.then((response)=>{
+					console.log(response);
+					setJobDetails(response.data.phpresult);
+				}).catch((error) => {
+					alert("error " + error);
+				});
+	  }, []);
+
+	 const handleApplyClick=(jid)=>{
+			alert('You have successfully applied for the job!');
+					const resdata = {                    
+						"role": role.applyJobs,
+						"jid": jid,
+						"id": id
+					};
+			URMService.ApplyJob(resdata)
+					.then((response)=>{
+						console.log(response);	
+						//window.location.reload();						
+					}).catch((error) => {
+						alert("error " + error);
+					});
+
+
 	  };
-	render() {
+
     return (
       <div>
         <h1 className="dashhead">URM Candidate Dashboard</h1>
@@ -17,56 +49,37 @@ export default class Urmcheckjobroles extends Component {
 			<table className="ftable">
 				<thead>
 						<tr>
+					    	<th>Job ID</th>
 							<th>Position</th>
 							<th>Job Description</th>
 							<th>Date Posted</th>
 							<th>Location</th>
-							<th> Details </th>
 							<th> Apply </th>
 						</tr>
 				</thead>
                 <tbody>
-				<tr>
-					<td> Post Doc</td>
-					<td> Backend Developer </td>
-					<td> 07/16/2023</td>
-					<td> Dallas</td>
-					<td>
-						<div className=""> <Link to="/Jobviewurm" className="button">Details</Link> </div>
-					</td>
-					<td>
-						<div className=""> <button type="submit" className="button" onClick={this.handleApplyClick}>Apply</button> </div>
-					</td>
-				</tr>
-				<tr>
-					<td> Faculty</td>
-					<td> Full Stack Developer </td>
-					<td> 01/16/2023</td>
-					<td> Dallas</td>
-					<td>
-						<div className=""> <Link to="/Jobviewurm" className="button">Details</Link> </div>
-					</td>
-					<td>
-						<div className=""> <button type="submit" className="button" onClick={this.handleApplyClick}>Apply</button> </div>
-					</td>
-				</tr>
-				<tr>
-					<td> Post Doc</td>
-					<td> Software Developer </td>
-					<td> 06/21/2023</td>
-					<td> Dallas</td>
-					<td>
-						<div className=""> <Link to="/Jobviewurm" className="button">Details</Link></div>
-					</td>
-					<td>
-						<div className=""> <button type="submit" className="button" onClick={this.handleApplyClick}>Apply</button>  </div>
-					</td>
-				</tr>
+				{jobDetails.map((rs) => (<tr key={rs.JID}>
+                                                <td>{rs.JID}</td>
+                                                <td>{rs.JOB_POSITIONS}</td>
+                                                <td>{rs.J_DESC}</td>
+                                                <td>{rs.DATE}</td>
+                                                <td>{rs.LOCATION}</td>                                                
+                                                
+                                                <td>
+												<div className="">
+                                                        <a className="button" onClick={()=>handleApplyClick(rs.JID)}>
+														Apply
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                   ) )}
+				
                 </tbody>
 
 			</table>
             <div>
-			<Link to={AppUrl.Urmdashboard} className="button">Back to Dashboard</Link>
+			<Link to={`/Urmdashboard/${id}`} className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 
@@ -77,4 +90,4 @@ export default class Urmcheckjobroles extends Component {
       </div>
     )
   }
-}
+

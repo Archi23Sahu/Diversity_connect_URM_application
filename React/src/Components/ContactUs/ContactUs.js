@@ -1,19 +1,65 @@
 import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
+import ContactusService from '../../Services/ContactusService';
 
 export default class ContactUs extends Component {
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const Name = event.target.aname.value;
-        const dname = event.target.dname.value;
-        const phoneno = event.target.phoneno.value;
-        const adesc = event.target.adesc.value;
-        const email = event.target.username.value;
-        const message = `UserId: ${Name}\nName: ${dname}\nPhone No: ${phoneno}\nComment: ${adesc}\nEmail: ${email}`;
-        alert(message);
-        event.target.reset();
+    constructor(props) {
+        super(props)
 
+        this.state = {            
+            dname: "",
+            phoneno: "",
+            adesc: "",
+            username: ""
+        }
+    }
+    
+    isPhoneNumberValid = (number) => {
+        const phoneNumberRegex = /^\d{10}$/; // Assuming phone numbers should be exactly 10 digits
+       
+        return phoneNumberRegex.test(number);
       };
+    
+    handleInputChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+        
+    };
+     
+    
+        handleSubmit = (e) => {
+            e.preventDefault();
+            const { dname, phoneno, adesc, username } = this.state;
+            if (!this.isPhoneNumberValid(phoneno)) {
+                alert('Please enter a valid 10-digit phone number');
+                return;
+            }
+            console.log(this.state);
+            const respData = {
+                "dname": dname,
+                "phoneno": phoneno,
+                "adesc": adesc,
+                "username": username
+            };
+    
+            ContactusService.contact(respData)
+            .then((response)=>{
+                console.log(response);
+                this.setState({//reset form after success
+                    dname: "",
+                    phoneno: "",
+                    adesc: "",
+                    username: ""
+                });
+                alert("Your question sent successfully.");
+            }).catch((error) => {
+                alert("error " + error);
+            });
+    
+    
+        }
+    
     render() {
         return (
             <div>
@@ -23,29 +69,30 @@ export default class ContactUs extends Component {
                         <h2> Contact Us</h2>
                             <table className="form-group">
                             <tbody>
-                                        <tr>
-                                            <th><label htmlFor="aname"><b>User ID</b></label></th>
-                                            <td> <input type="text" name="aname" id="aname" placeholder="Enter your User ID" required /></td>
-                                        </tr>
+                                        
                                         <tr>
                                             <th><label htmlFor="dname"><b>Name</b></label></th>
-                                            <td> <input type="text" name="dname" id="dname" placeholder="Enter your name " required /></td>
+                                            <td> <input type="text" name="dname" id="dname" placeholder="Enter your name " required  value={this.state.dname}
+                                                onChange={this.handleInputChange} /></td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="phoneno"><b>Phone number</b></label></th>
                                             <td>
-                                                <input type="text" name="phoneno" id="phoneno" placeholder="Enter your phone number" required />
+                                                <input type="text" name="phoneno" id="phoneno" placeholder="Enter your phone number" required  value={this.state.phoneno}
+                                                onChange={this.handleInputChange} />
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="adesc"><b>Comments</b></label></th>
                                             <td>
-                                                <textarea rows="4" cols="53" id="adesc" name="adesc" placeholder="Enter your Comments"></textarea>
+                                                <textarea rows="4" cols="57" id="adesc" name="adesc" placeholder="Enter your Comments" value={this.state.adesc}
+                                                onChange={this.handleInputChange} required ></textarea>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th><label htmlFor="username"><b>Email</b></label></th>
-                                            <td><input type="email" name="username" id="username" placeholder="Enter email" required /> </td>
+                                            <td><input type="email" name="username" id="username" placeholder="Enter email" required  value={this.state.username}
+                                                onChange={this.handleInputChange} /> </td>
                                         </tr>
                                         <tr>
                                             <td colSpan="2">

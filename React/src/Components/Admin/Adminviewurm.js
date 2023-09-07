@@ -2,13 +2,52 @@ import React, { Component } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import AdminSideMenu from './AdminSideMenu'
-import { AppUrl } from '../../Constants'
+import { role, AppUrl } from '../../Constants'
+import AdminService from '../../Services/AdminService';
+
 
 export default class Adminviewurm extends Component {
-    handleDelete = (Name) => {
-		alert(`You have deleted user ${Name}`);
-	  };
+    constructor(props) {
+                super(props);
+                this.state = {
+                    urmDetails: []
+                };
+            }
+            componentDidMount() {
+                // Fetch personal information and faculty details
+            // this.fetchPersonalInfo();
+            
+                    
+                this.showURM();
+            }
+            showURM(){
+                AdminService.fetchURM()
+                .then((response)=>{
+                    console.log(response);
+                this.setState({ urmDetails: response.data.phpresult});
+                }).catch((error) => {
+                    alert("error " + error);
+                });
+            }
+
+            
+            handleDeleteURM=(uid)=>{
+                alert(`You deleted  ${uid} position.`);
+                const resdata = {                    
+                    "role": role.Deleteurm,
+                    "uid": uid
+                };
+                AdminService.deleteURM(resdata)
+                .then((response)=>{
+                    console.log(response);
+                    //window.location.reload();	
+                }).catch((error) => {
+                    alert("error " + error);
+                });
+
+    }
     render() {
+        const { urmDetails } = this.state;
     return (
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
@@ -21,10 +60,11 @@ export default class Adminviewurm extends Component {
             <table className="ftable">
                     <thead>
                         <tr>
+                             <th> URM ID</th>
                             <th> Name</th>
-                            <th>Phone number</th>
-                            <th>Nationality</th>
+                            <th>Phone number</th>                          
                             <th>Location</th>
+                            <th>Nationality</th>
                             <th>Ethnicity</th>
                             <th>Education</th>
                             <th>Research Experience</th>
@@ -35,64 +75,36 @@ export default class Adminviewurm extends Component {
                         </tr>
                     </thead>
                 <tbody>
-                <tr>
-                    <td> Rahul </td>
-                    <td> 2144568745</td>
-                    <td> Indian </td>
-                    <td> Dallas </td>
-                    <td> Asian </td>
-                    <td>masters </td>
-                    <td> 3</td>
-                    <td> xyz</td>
-                    <td>Post doc </td>
-                    <td>
-                        <div className="button-container"><button onClick={() => this.handleDelete('Rahul')} className="button">Delete</button></div>
-                    </td>
-                    <td>
-                        <div className="button-container"> 
-                        <Link to={AppUrl.Adminupdateurm} className="button">Update</Link> 
-                        </div>
-                    </td>
+                {urmDetails.map((rs)=>
+                                            <tr key={rs.UId}>
+                                                <td>{rs.UId}</td>
+                                                <td>{rs.Uname}</td>
+                                                <td>{rs.Phone_no}</td>
+                                                <td>{rs.Location}</td>
+                                                <td>{rs.Nationality}</td>
+                                                <td>{rs.Ethinicity}</td>
+                                                <td>{rs.Education}</td>
+                                                <td>{rs.Res_exp}</td>
+                                                <td>{rs.Publications}</td>
+                                                <td>{rs.Positions}</td>
+                                               
+                                                <td>
+                                                    <div className="">
+                                                        <a className="button" onClick={()=>this.handleDeleteURM(rs.UId)}>
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="">
+                                                    <Link to={`/Adminupdateurm/${rs.UId}`} className="button">Update</Link>
 
-                </tr>
-                <tr>
-                    <td> Anjali </td>
-                    <td> 2844568788</td>
-                    <td> Indian </td>
-                    <td> Dallas </td>
-                    <td> Asian </td>
-                    <td>masters </td>
-                    <td> 3</td>
-                    <td> xyz</td>
-                    <td>PhD </td>
-                    <td>
-                        <div className="button-container"> <button onClick={() => this.handleDelete('Anjali')} className="button">Delete</button> </div>
-                    </td>
-                    <td>
-                        <div className="button-container"> 
-                         <Link to={AppUrl.Adminupdateurm} className="button">Update</Link> 
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td> Zara </td>
-                    <td> 2144987745</td>
-                    <td> Indian </td>
-                    <td> Dallas </td>
-                    <td> Asian </td>
-                    <td>masters </td>
-                    <td> 3</td>
-                    <td> xyz</td>
-                    <td>Faculty</td>
-                    <td>
-                        <div className="button-container"> <button onClick={() => this.handleDelete('Zara')} className="button">Delete</button> </div>
-                    </td>
-                    <td>
-                        <div className="button-container"> 
-                         <Link to={AppUrl.Adminupdateurm} className="button">Update</Link> 
-                        </div>
-                    </td>
-                </tr>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
+                
+                
 
                 </tbody>
             </table>

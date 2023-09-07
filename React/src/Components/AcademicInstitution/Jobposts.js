@@ -1,50 +1,99 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import { AppUrl } from '../../Constants'
+import AcademicService from '../../Services/AcademicService';
+import { role,backendUrl } from '../../Constants';
+import { withRouter } from '../../withRouter';
 
 
-export default class Jobposts extends Component {
-	handleSubmit = (event) => {
-        event.preventDefault();
-        const jobposition = event.target.jobposition.value;
-        const description = event.target.jdesc.value;
-        const date = event.target.date.value;
-        const location = event.target.location.value;
-        const message = `Position: ${jobposition}\nDescription: ${description}\nDate: ${date}\nLocation: ${location}`;
-        alert(message);
-		event.target.reset();
-		 
-      };
-  render() {
+
+function Jobposts(){
+	
+	  const { id } = useParams();
+	  const [jobDetails, setJobDetails] = useState({
+        jobposition:"",
+        jdesc:"",
+        date:"",
+        location:"",
+    });
+
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setJobDetails((prevJobDetails) => ({
+			...prevJobDetails,
+			[name]: value,
+		}));
+	};
+  
+	  const handleSubmit=(e)=>{
+		e.preventDefault();
+        const {  jobposition, jdesc, date, location } = jobDetails;
+        
+        
+        
+        const respData = {
+            "jobposition": jobposition,
+            "jdesc": jdesc,
+            "date": date,
+            "location": location,           
+            "role": role.Jobposted,
+             "id":id
+        };
+
+        
+		 AcademicService.register(respData)
+		  .then((response)=>{
+			  console.log(response);
+			  alert(response.data);
+			  setJobDetails({
+				jobposition:"",
+				jdesc:"",
+				date:"",
+				location:""
+  
+			  });
+			  e.target.reset();
+		  }).catch((error) => {
+			  alert("error " + error);
+		  });  
+  
+	  }
+	  
+  
     return (
       <div>
         <h1 className="dashhead">Academia Dashboard</h1>
 	  <div className="container">
 		<section className="card">
         <h2> Job Posting Form</h2>
-		<form onSubmit={this.handleSubmit}> <br />
+		<form onSubmit={handleSubmit}> <br />
 				<table className="form-group">
 					<tbody>
 					<tr>
 						<th><label htmlFor="jobposition"><b>Position</b></label></th>
-						<td> <input type="text" name="jobposition" id="jobposition" placeholder="Enter position" required /></td>
+						<td> <input type="text" name="jobposition" id="jobposition"  placeholder="Enter position" required  value={setJobDetails.jobposition}
+                                        onChange={handleInputChange}  /></td>
 					</tr>
 					<tr>
 						<th><label htmlFor="jdesc"><b>Job Description</b></label></th>
 						<td>
 							<textarea rows="4" cols="57" id="jdesc" name="jdesc"
-								placeholder="Enter your institution description"></textarea>
+								placeholder="Enter your institution description" required value={setJobDetails.jdesc}
+								onChange={handleInputChange}></textarea>
 						</td>
 					</tr>
 					<tr>
 						<th><label htmlFor="date"><b>Date</b></label></th>
-						<td><input type="date" name="date" id="date" />
+						<td><input type="date" name="date" id="date" required value={setJobDetails.date}
+                                        onChange={handleInputChange} />
 						</td>
 					</tr>
 					<tr>
 						<th><label htmlFor="location"><b>Location</b></label></th>
-						<td><input type="text" name="location" id="location" placeholder="Enter location" /> </td>
+						<td><input type="text" name="location" id="location" placeholder="Enter location"  required value={setJobDetails.location}
+                                        onChange={handleInputChange} /> </td>
 					</tr>
 					<tr>
 						<td colSpan="2">
@@ -58,7 +107,7 @@ export default class Jobposts extends Component {
 
 			</form> <br />
 			<div className="button-container">
-              <Link to={AppUrl.Academiadashboard} className="button">Back to Dashboard</Link>
+              <Link to={`/Academiadashboard/${id}`}  className="button">Back to Dashboard</Link>
 			</div>
 		</section>
 
@@ -69,4 +118,5 @@ export default class Jobposts extends Component {
       </div>
     )
   }
-}
+
+export default withRouter(Jobposts);

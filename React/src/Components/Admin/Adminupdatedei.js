@@ -1,23 +1,87 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect} from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import AdminSideMenu from './AdminSideMenu'
+import { useParams } from 'react-router-dom';
+import AdminService from '../../Services/AdminService';
+import { role } from '../../Constants';
 
-export default class Adminupdatedei extends Component {
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const dname = event.target.dname.value;
-        const description = event.target.ddesc.value;
-        const role = event.target.role.value;
-        const organization = event.target.organization.value;
-        const goal = event.target.goal.value;
-        const initiatives = event.target.initiatives.value;
-        const eventInput = event.target.event.value;
-        const positions = event.target.postions.value;
-        const message = `Name: ${dname}\nDescription: ${description}\nRole: ${role}\nOrganization: ${organization}\nGoals: ${goal}\nInitiatives: ${initiatives}\nNew Initiatives/Events: ${eventInput}\nPositions: ${positions}`;
-        alert(message);
-      };
-    render() {
+
+export default function  Adminupdatedei (){
+    const { id } = useParams();
+    const [deiDetails, setDeiDetails] = useState({
+         dname: "",
+         ddesc: "",
+         role1: "",
+         organization: "", 
+         goal:"",
+         initiatives:"",
+         new_events:"",
+         postions:"",
+    });
+    
+    useEffect(() => {
+        // Fetch the job details and update the state using the AdminService
+        AdminService.updateDEI(id)
+            .then((response) => {
+                console.log(response);
+                const jobData = response.data.phpresult[0]; // Extract the object from the array
+                setDeiDetails({
+                     dname: jobData.DNAME,
+                     ddesc: jobData.D_DESC,
+                     role1: jobData.DROLE,
+                     organization: jobData.ORGANIZATION,
+                     goal:jobData.GOALS,
+                     initiatives:jobData.INITIATIVES,
+                     new_events:jobData.NEW_EVENTS,
+                     postions:jobData.POSITIONS
+                });
+                console.log("deiDetails", deiDetails);
+            })
+            .catch((error) => {
+                alert("error " + error);
+            });
+    }, [id]); 
+   
+   
+
+        const handleChange = (event) => {
+            const { name, value } = event.target;
+            setDeiDetails((prevDeiDetails) => ({
+                ...prevDeiDetails,
+                [name]: value,
+            }));
+        };
+        
+    const  handleSubmit=(e)=>{
+        e.preventDefault();
+        const {  dname, ddesc, role1, organization,goal,initiatives,new_events,postions} = deiDetails;
+        console.log(deiDetails);
+        
+        
+        const respData = {
+            "id":id,
+            "dname": dname,
+            "ddesc": ddesc,
+            "role1": role1,
+            "organization": organization,           
+            "role": role.DEIchange,
+             "goal":goal,
+             "initiatives":initiatives,
+             "new_events":new_events,
+             "postions":postions
+        };
+
+       AdminService.changedetailsofDEI(respData)
+        .then((response)=>{
+            console.log(response);
+            alert(response.data);
+            
+        }).catch((error) => {
+            alert("error " + error);
+        });  
+
+    }
     return (
       <div>
         <h1 className="dashhead">Admin Dashboard</h1>
@@ -27,46 +91,46 @@ export default class Adminupdatedei extends Component {
 
     <div className="container">
         <section className="card">
-            <form onSubmit={this.handleSubmit}> <br/>
+            <form onSubmit={handleSubmit}> <br/>
             <h2> Update DEI Officer Details</h2>
                 <table className="form-group">
                     <tbody>
                     <tr>
                         <th><label htmlFor="dname"><b>Name</b></label></th>
-                        <td> <input type="text" name="" id="dname" placeholder="Enter your name " defaultValue="DEI1"/></td>
+                        <td> <input type="text" name="dname" id="dname" placeholder="Enter your name " value={deiDetails.dname} onChange={handleChange }/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="ddesc"><b>Description</b></label></th>
-                        <td> <textarea rows="3" cols="57" id="ddesc"
-                                placeholder="Enter description" defaultValue="Description of dei officer"/></td>
+                        <td> <textarea rows="3" cols="57" id="ddesc" name="ddesc"
+                                placeholder="Enter description"value={deiDetails.ddesc} onChange={handleChange }/></td>
                     </tr>
                     <tr>
-                        <th><label htmlFor="role"><b>Role</b></label></th>
-                        <td> <input type="text" name="" id="role" placeholder="Enter role" defaultValue="XYZ"/></td>
+                        <th><label htmlFor="role1"><b>Role</b></label></th>
+                        <td> <input type="text" name="role1" id="role1" placeholder="Enter role" value={deiDetails.role1} onChange={handleChange }/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="organization"><b>Organization</b></label></th>
-                        <td> <input type="text" name="" id="organization" placeholder="Enter your organization"
-                                defaultValue="Abacus"/></td>
+                        <td> <input type="text" name="organization" id="organization" placeholder="Enter your organization"
+                                value={deiDetails.organization} onChange={handleChange }/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="goal"><b>Goals</b></label></th>
-                        <td> <input type="text" name="" id="goal" placeholder="Enter goals" defaultValue="goal1, goal2"/>
+                        <td> <input type="text" name="goal" id="goal" placeholder="Enter goals" value={deiDetails.goal} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
                         <th><label htmlFor="initiatives"><b>Initiatives</b></label></th>
-                        <td> <input type="text" name="" id="initiatives" placeholder="Enter Initiatives"
-                                defaultValue="Initiatives1, Initiatives2"/></td>
+                        <td> <input type="text" name="initiatives" id="initiatives" placeholder="Enter Initiatives"
+                                value={deiDetails.initiatives} onChange={handleChange }/></td>
                     </tr>
                     <tr>
-                        <th><label htmlFor="event"><b>new Initiatives/Events</b></label></th>
-                        <td> <input type="text" name="" id="event" placeholder="Enter new Initiatives or Events"
-                                defaultValue="new Initiatives, new Events"/></td>
+                        <th><label htmlFor="new_events"><b>new Initiatives/Events</b></label></th>
+                        <td> <input type="text" name="new_events" id="new_events" placeholder="Enter new Initiatives or Events"
+                                value={deiDetails.new_events} onChange={handleChange }/></td>
                     </tr>
                     <tr>
                         <th><label htmlFor="postions"><b>Postions</b></label></th>
-                        <td><input type="text" name="" id="postions" placeholder="Enter positions" defaultValue="Post doc"/>
+                        <td><input type="text" name="postions" id="postions" placeholder="Enter positions" value={deiDetails.postions} onChange={handleChange }/>
                         </td>
                     </tr>
                     <tr>
@@ -90,4 +154,4 @@ export default class Adminupdatedei extends Component {
 
     )
   }
-}
+

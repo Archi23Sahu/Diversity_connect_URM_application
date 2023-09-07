@@ -1,11 +1,38 @@
-import React, { Component } from 'react'
+import React, { useState,useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
 import { AppUrl } from '../../Constants'
+import URMService from '../../Services/URMService';
+import { useParams } from 'react-router-dom';
+import { role } from '../../Constants';
 
 
-export default class Jobviewurm extends Component {
-  render() {
+export default function Jobviewurm(){
+	const { id,jid } = useParams();
+	const [jobDetails, setJobDetails] = useState({
+		jobposition:"",
+		jdesc:"",
+		date:"",
+		location:"",
+	});
+		useEffect(() => {
+		  // Fetch the job details and update the state using the AdminService
+		URMService.urmupdateJobs(jid)
+			  .then((response) => {
+				  console.log(response);
+				  const jobData = response.data.phpresult[0]; // Extract the object from the array
+				  setJobDetails({
+					  jobposition: jobData.JOB_POSITIONS,
+					  jdesc: jobData.J_DESC,
+					  date: jobData.DATE,
+					  location: jobData.LOCATION,
+				  });
+				  console.log("jobDetails", jobDetails);
+			  })
+			  .catch((error) => {
+				  alert("error " + error);
+			  });
+	  }, []); 
     return (
       <div>
         <h1 className="dashhead">URM Candidate Dashboard</h1>
@@ -19,30 +46,30 @@ export default class Jobviewurm extends Component {
 					<tr>
 						<th><label htmlFor="jobposition"><b>Position</b></label></th>
 						<td> <input type="text" name="" id="jobposition" placeholder="Enter position"
-								defaultValue="Backend Developer" readOnly /></td>
+								value={jobDetails.jobposition} readOnly /></td>
 					</tr>
 					<tr>
 						<th><label htmlFor="jdesc"><b>Job Description</b></label></th>
 						<td>
 							<textarea rows="4" cols="57" id="jdesc" placeholder="Enter your institution description"
-								readOnly defaultValue="A software developer with a focus on web application development and server-side, or database-side, programming is known as a back-end developer. The code that the website visitor cannot see is handled by back-end developers, but they are also in charge of making sure that the front end, or what the visitor sees and interacts with, is fully working as a whole"/>
+								readOnly  value={jobDetails.jdesc}/>
 						</td>
 					</tr>
 					<tr>
 						<th><label htmlFor="date"><b>Date</b></label></th>
-						<td><input type="date" name="" id="date" defaultValue="2020-01-01" readOnly/>
+						<td><input type="date" name="" id="date"value={jobDetails.date}  readOnly/>
 						</td>
 					</tr>
 					<tr>
 						<th><label htmlFor="location"><b>Location</b></label></th>
-						<td><input type="text" name="" id="location" placeholder="Enter location" defaultValue="USA" readOnly/>
+						<td><input type="text" name="" id="location" placeholder="Enter location" value={jobDetails.location} readOnly/>
 						</td>
 					</tr>
 					<tr>
 					<td colSpan="2">
 						<div className="button-container">
 
-                        <Link to={AppUrl.Urmdashboard} className="button">Back to Dashboard</Link>
+                        <Link to={`/Urmdashboard/${id}`} className="button">Back to Dashboard</Link>
 						</div>
 						<br/>
 					</td>
@@ -61,4 +88,4 @@ export default class Jobviewurm extends Component {
       </div>
     )
   }
-}
+

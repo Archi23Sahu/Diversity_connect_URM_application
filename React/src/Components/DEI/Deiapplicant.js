@@ -1,10 +1,33 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import Footer from '../Footer/Footer'
 import { Link } from 'react-router-dom'
-import { AppUrl } from '../../Constants'
+import AcademicService from '../../Services/AcademicService';
+import { useParams } from 'react-router-dom';
+import { withRouter } from '../../withRouter';
+import { role } from '../../Constants'
 
-export default class Deiapplicant extends Component {
-  render() {
+
+export default function Deiapplicant(){
+  const { id,jid } = useParams();
+
+  
+  const [applicantsDetails, setapplicantsDetails] = useState([]);
+      
+  useEffect(() => {
+    AcademicService.getApplicants(jid)
+      .then((response) => {
+        console.log(response); // Check the structure of the response
+        setapplicantsDetails(response.data.phpresult);
+        
+         
+          
+        
+      }).catch((error) => {
+        alert("error " + error);
+      });
+  }, []);
+
+
     return (
       <div>
         <h1 className="dashhead">DEI Officer Dashboard</h1>
@@ -21,35 +44,20 @@ export default class Deiapplicant extends Component {
             </tr>
           </thead>
         <tbody>
-        <tr>
-          <td>1000</td>
-          <td>4590</td>
-          <td>Applied</td>
-          <td>5550</td>
-        </tr>
-        <tr>
-          <td>1000</td>
-          <td>4591</td>
-          <td>Pending</td>
-          <td>1550</td>
-        </tr>
-        <tr>
-          <td>1000</td>
-          <td>4596</td>
-          <td>Pending</td>
-          <td>2650</td>
-        </tr>
-        <tr>
-          <td>1000</td>
-          <td>3590</td>
-          <td>Selected</td>
-          <td>1200</td>
-        </tr>
+        {applicantsDetails.map((rs) => (
+              <tr key={rs.App_Id}>
+                <td>{rs.JID}</td>
+                <td>{rs.App_Id}</td>
+                <td>{rs.STATUS}</td>
+                <td>{rs.UID}</td>                
+              </tr>
+            ))
+          }
         </tbody>
 
       </table>
       <div className="button-container">
-      <Link to={AppUrl.Deidashboard} className="button">Back to Dashboard</Link>
+      <Link to={`/Deidashboard/${id}`} className="button">Back to Dashboard</Link>
       </div>
     </section>
 
@@ -59,4 +67,4 @@ export default class Deiapplicant extends Component {
       </div>
     )
   }
-}
+
