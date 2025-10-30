@@ -44,12 +44,12 @@ See the section about [deployment](https://create-react-app.dev/docs/deployment/
 - DEI Officers: A person who posts jobs.
 
 
-![UML Diagram]
+![UML Diagram](https://github.com/Archi23Sahu/Diversity_connect_URM_application/blob/main/UML%20Diagram.png)
 
 
 ## 🗃Database Schema
 
-![Schema]
+![Schema] (https://github.com/Archi23Sahu/Diversity_connect_URM_application/blob/main/Schema.png)
 
 
 ## 〽️Tech Stack
