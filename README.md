@@ -49,7 +49,7 @@ See the section about [deployment](https://create-react-app.dev/docs/deployment/
 
 ## 🗃Database Schema
 
-![Schema] (https://github.com/Archi23Sahu/Diversity_connect_URM_application/blob/main/Schema.png)
+![Schema](https://github.com/Archi23Sahu/Diversity_connect_URM_application/blob/main/Schema.png)
 
 
 ## 〽️Tech Stack
